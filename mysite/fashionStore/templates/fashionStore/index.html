@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Store</title>
+    <link rel="stylesheet" href="{% static 'fashionStore/main.css' %}">
+    <script src="{% static 'fashionStore/main.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/18de66c05e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrapper">
+    <!---header menu-->
+<div class="headerMenu">
+    <div class="logo">FsahionStore</div>
+    <div class="searchbar"><form> <input type="search" name="query" id="query" placeholder="Search for product brand and category"></form></div>
+    <div class="Account">
+        <button class="btn Accountbtn">Account</button>
+        <div class="Account-sub-menu">
+            <div class="Signupbtn">
+            <a href="http://">SIGN IN</a>
+        </div>
+            <a href="http://">My Account</a>
+            <a href="http://">Order</a>
+            <a href="http://">Save Item</a>
+        </div>
+    </div>
+    <div class="shopcart">
+    <button class="btn">Cart (0)</button>
+</div>
+</div>
+<!---header menu-->
+<!--menu link-->
+<div class="linkMenu">
+    <div class="navbar" onclick="showNav()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <a href="http://">Computers and Accessories</a>
+    <a href="http://">Phone And Tablets</a>
+    <a href="http://">Home and Kitchen</a>
+    <a href="http://">Electronics</a>
+    <a href="http://">Cars and Trucks</a>
+    <a href="http://">Contact us</a>
+</div>
+<!--menu link-->
+<div class="navbarMenu">
+    <div class="Acct">
+        <p><img src=" {% static 'images/default.png' %}" alt=""><p>Account</p></p>
+</div>
+    <a href="http://">Signup / Login</a>
+    <a href="http://">Home & Office</a>
+    <a href="http://">Electronics</a>
+    <a href="http://">Cars and Trucks</a>
+    <a href="http://">Cloths</a>
+    <a href="http://">Shoes</a>
+    <a href="http://">Health & Beauty</a>
+    <a href="http://">Phone and Tablet</a>
+    <a href="http://">baby Product</a>
+    <a href="http://">Gameing</a> 
+    <a href="http://">Logout</a> 
+
+</div>
+<!--content-wrapper-->
+<div class="contentWrapper">
+    <div class="CategoryHolder">
+        <a href="http://">Home & Office</a>
+        <a href="http://">Electronics</a>
+        <a href="http://">Cars and Trucks</a>
+        <a href="http://">Cloths</a>
+        <a href="http://">Shoes</a>
+        <a href="http://">Health & Beauty</a>
+        <a href="http://">Phone and Tablet</a>
+        <a href="http://">baby Product</a>
+        <a href="http://">Gameing</a>  
+    </div>
+    <!--s-->
+    <div class="slideContent">
+        {% block slideContent %}
+        <!-- Slideshow container -->
+<div class="slideshow-container">
+
+    <!-- Full-width images with number and caption text -->
+    <div class="mySlides fade">
+      <img src="{% static 'images/bags1.jpg' %}">
+    </div>
+  
+    <div class="mySlides fade">
+      <img src="{% static 'images/images (65).jpg' %}">
+    </div>
+  
+    <div class="mySlides fade">
+      <img src="{% static 'images/images (66).jpg' %}">
+    </div>
+
+    <div class="mySlides fade">
+        <img src="{% static 'images/images (66).jpg' %}">
+      </div>
+  
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+  <br>
+  
+  <!-- The dots/circles -->
+  <div class="dotHolder">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+  </div>
+        
+        {% endblock slideContent %}
+    </div>
+</div>
+<!--content-category-slider-wrapper-->
+<div class="sortMenu">
+    <div class="allproduct">
+        <span>Top Products</span>
+    </div>
+    <div class="sort">
+        <form>
+            <Label for="sortp">Sort by:</Label>
+            <select name="sortp" id="sortp">
+                <option value="Popularity">Popularity</option>
+                <option value="Latest">latest</option>
+                <option value="Latest">High to low</option>
+            </select>
+        </form>
+    </div>
+</div>
+<!--ProductContainer-->
+<div class="ProductContainer">
+    {% block ProductContainer %}
+    <div class="Productholder">
+        <img src="{% static 'images/bags1.jpg' %}">
+        <p style="font-weight:bold;">black leather bag</p>
+        <p>$ 100</p>
+        <p>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        </p>
+        <div class="cartbtn">
+            <form>
+                <input type="submit" value="Add To Cart">
+            </form>
+        </div>
+    </div>
+    {% endblock ProductContainer %}
+</div>
+<!--ProductContainer-->
+<!--pagination-->
+<div class="paginationholder">
+        <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a href="#" class="active">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
+      </div>
+
+</div>
+<!--pagination-->
+<!--footer-->
+<div class="footerheader">
+    <div class="f-logo"><H2>FASHIONSTORE</H2></div>
+    <div class="subcribe-form">
+        <H4>New to FashionStore</H4>
+        <p>Subcribe to our newsletter to get updates on our lastest offers</p>
+        <form>
+            <input type="email" name="email" id="" placeholder="Enter E-mail Address"><input type="submit" value="Subcribe">
+        </form>
+    </div>
+</div>
+<div class="footer-content">
+<div>
+   <h4>LET US HELP YOU</h4>
+   <p>Help Center</p>
+   <p>How to shop on FashionStore</p>
+   <p>Delivery options and Timelines</p>
+   <p>Report a Product</p>
+   <p>How to return Product</p>
+   <p>Ship your package Anywhere</p>
+</div>
+<div>
+    <h4>ABOUT FASHIONSTORE</h4> 
+   <p>About us</p>
+   <p>Terms and Condtions</p>
+   <p>Free Shiping</p>
+   <p>fashionStore Express/p>
+   <p>How to return Product</p>
+   <p>Ship your package Anywhere</p>
+ </div>
+
+ <div>
+    <h4>MAKE MONEY WITH FASHION</h4> 
+   <p>Sell on FashionStore</p>
+   <p>Become a Sales Consultant</p>
+   <p>Delivery Options And timelines</p>
+   <p>Become a FashionStore Vendor Service Provider</p>
+   <p>Become a Logistic service Provider</p>
+ </div>
+
+ <div>
+    <h4>JOIN US ON</h4> 
+    
+        <i class="fa-brands fa-facebook-square"></i>
+        <i class="fa-brands fa-youtube"></i>
+        <i class="fa-brands fa-whatsapp"></i>
+        <i class="fa-brands fa-linkedin"></i>
+        <i class="fa-brands fa-instagram"></i>
+ </div>
+
+</div>
+<div class="copyright">
+    
+   <p>Copyright © 2022 FashionStore.com. All rights reserved</p>
+</div>
+
+
+</div>  
+ 
+</body>
+</html>
