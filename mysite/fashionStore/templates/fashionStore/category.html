@@ -1,0 +1,23 @@
+{% extends 'fashionStore/index.html' %}
+{% load static %}
+
+{% block ProductContainer %}
+<div class="Productholder">
+    <img src="{% static 'images/bags1.jpg' %}">
+    <p style="font-weight:bold;">black leather bag</p>
+    <p>$ 100</p>
+    <p>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+    </p>
+    <div class="cartbtn">
+        <form>
+            <input type="submit" value="Add To Cart">
+        </form>
+    </div>
+</div>
+
+{% endblock ProductContainer %}

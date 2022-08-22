@@ -27,3 +27,11 @@ from django.urls import reverse, reverse_lazy
 
 def index(request):
     return render(request,'FashionStore/index.html',{})
+
+def details(request,product_id=1):
+  return render(request,'FashionStore/details.html',{})
+
+
+
+def Category(request,product_title='bag'):
+  return render(request,'FashionStore/category.html',{})

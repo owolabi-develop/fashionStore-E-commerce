@@ -1,0 +1,128 @@
+{% extends 'fashionStore/index.html' %}
+{% load static %}
+{% block contentWrapper %}{% endblock contentWrapper %}
+{% block sortMenu %}{% endblock sortMenu %}
+
+{% block ProductContainer %}
+<div class="product-data">
+    <div class="product-image">
+        <div>
+            <img src="{% static 'images/images (66).jpg' %}">
+          </div>
+
+    </div>
+    <div class="product-title">
+        <p>Saisho Sandwich Maker Toaster S-609 2F(6) - White</p>
+        <p>Brand:Brand: Saisho | Similar products from Saisho</p>
+        <p>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            </p>
+            <p style="font-weight: bold;">N 5,700</p>
+            <form>
+                <input type="number" name="quantity" value="1" id="quantity">
+            </form>
+            <div class="detail-cart-btn">Add To Cart</div>
+            <br>
+            <p style="font-weight: bold;">Product Details</p>
+    </div>
+</div>
+<!--delivery and return-->
+<div class="product-delivery">
+   <div class="delivery-text">
+    <span style="font-weight:bold;">DELIVERY & RETURN</span>
+   </div>
+
+   <div class="delivery-text">
+    <p style="font-style:italic; font-weight:bold;">FashionStore Express</p>
+   <p>Free delivery on thousands of products in Lagos, Ibadan & Abuja Details</p>
+   </div>
+<!--dev detals-->
+   <div class="delivery-text">
+    <p style="font-weight:bold;">Choose your location</p>
+    <form>
+        <select name="state" id="state"></select>
+        <br/>
+        <br/>
+        <select name="City" id="state"></select>
+    </form>
+    <p><i class="fa-solid fa-truck"></i> Door Delivery 
+        Delivery ₦ 950
+        Delivery by 23 August 
+    </p>
+
+    <p><i class="fa-solid fa-building-flag"></i></i> Pickup Station
+        Delivery ₦ 730
+        Pickup by 23 August 
+    </p>
+   </div>
+   <!--delivery -detal-->
+   <div class="delivery-text">
+    <p><i class="fa-solid fa-person-walking-arrow-loop-left"></i>Return Policy<br/>
+        Free return within 15 days</p>
+   
+   </div>
+
+   <div class="delivery-text">
+    <p><i class="fa-solid fa-hourglass-start"></i>Warranty <br> Technical Issue</p>
+   
+   </div>
+</div>
+
+<!--delivery and return-->
+<!--you-may also like-->
+<div class="also-like">
+    <h3>You may also like</h3>
+    <div class="also-like-data">
+        <div class="Productholder">
+            <img src="{% static 'images/bags1.jpg' %}">
+            <p style="font-weight:bold;">black leather bag</p>
+            <p>$ 100</p>
+            <p>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            </p>
+            <div class="cartbtn">
+                <form>
+                    <input type="submit" value="Add To Cart">
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--you-may also like-->
+<!--recent view-->
+<div class="recent-view-product">
+    <h3>Recently Viewed</h3>
+<div class="recent-view">
+    <div class="Productholder">
+        <img src="{% static 'images/bags1.jpg' %}">
+        <p style="font-weight:bold;">black leather bag</p>
+        <p>$ 100</p>
+        <p>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        </p>
+        <div class="cartbtn">
+            <form>
+                <input type="submit" value="Add To Cart">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<!--recent view-->
+
+{% endblock ProductContainer %}
+
+{% block paginationholder %}{% endblock paginationholder %}
