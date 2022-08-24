@@ -82,7 +82,7 @@ def UserLogin(request):
         
         if user is not None:
             login(request,user)
-            return HttpResponseRedirect(reverse("fashionStore:Profile"))
+            return HttpResponseRedirect(reverse("fashionStore:index"))
         else:
              messages.error(request,'Email or Password is incorrect try again')
 
@@ -143,26 +143,48 @@ def UserProfile(request):
 
     return render(request,"fashionStore/profile.html",{'form':form})
 
+@login_required(login_url='/Userlogin/')
 def Wishlist(request):
   return render(request,'fashionStore/whishlist.html')
-
+@login_required(login_url='/Userlogin/')
 def UserOrder(request):
   return render(request,'fashionStore/order.html')
 
 def RecentlyView(request):
   return render(request,'fashionStore/RecentlyView.html')
 
+
+@login_required(login_url='/Userlogin/')
 def userDetails(request):
-  return render(request,'fashionStore/userdetails.html',{})
+  if request.method == "POST":
+    userEditform = UserEditForm(request.POST,instance=request.user)
+    if userEditform.is_valid():
+        userEditform.save()
+        messages.success(request,'User info Update Successful')
+  else:
+      userEditform = UserEditForm(instance=request.user)
+  return render(request,'fashionStore/customer-account-edit.html',{'userEditform':userEditform})
 
+@login_required(login_url='/Userlogin/')
 def changePassword(request):
-  return render(request,'fashionStore/changepass.html',{})
+  if request.method == "POST":
+    PasswordChangeform = UserChangePassword(user=request.user, data=request.POST)
+    if PasswordChangeform.is_valid():
+        PasswordChangeform.save()
+        update_session_auth_hash(request, PasswordChangeform.user)
+        messages.success(request,'Password Update Successful')
+  else:
+      PasswordChangeform = UserChangePassword(user=request.user)
+  return render(request,'fashionStore/changepass.html',{'PasswordChangeform':PasswordChangeform})
 
+@login_required(login_url='/Userlogin/')
 def CloseAccount(request):
   return render(request,'fashionStore/CloseAccount.html')
 
+@login_required(login_url='/Userlogin/')
 def AddressBook(request):
   return render(request,'fashionStore/AddressBook.html')
 
+@login_required(login_url='/Userlogin/')
 def NewsSeletter(request):
   return render(request,'fashionStore/NewsSeletter.html')

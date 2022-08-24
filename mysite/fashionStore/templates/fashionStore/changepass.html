@@ -1,0 +1,21 @@
+{% extends 'fashionStore/profile.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block profile-content %}
+
+<div class="profile-content-title">{% block profile-content-title %} Password Update{% endblock profile-content-title %}</div>
+<div class="change-password">
+<form action="{% url 'fashionStore:changePassword' %}" method="post">
+    {% csrf_token %}
+    {{PasswordChangeform.non_field_errors}}
+    {% for field in PasswordChangeform %}
+     {{field.label}}
+     <br/>
+     {{field}}
+     {{field.errors}}
+    {% endfor %}
+    <input type="Submit" value="Upadate Password">  
+</form>
+</div>
+{% endblock profile-content %}

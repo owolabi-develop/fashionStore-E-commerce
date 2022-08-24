@@ -2,4 +2,27 @@
 {% load static %}
 {% block profile-content %}
 <div class="profile-content-title">{% block profile-content-title %} Your Recently Viewed Item{% endblock profile-content-title %}</div>
+<div class="product-recent-holder">
+    <div class="Productholder">
+        <img src="{% static 'images/bags1.jpg' %}">
+        <p style="font-weight:bold;">black leather bag</p>
+        <p>$ 100</p>
+        <p>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        </p>
+        <div class="cartbtn">
+            <a href="{% url 'fashionStore:Wishlist' %}" style="font-size:20px; float:right; text-decoration:none; padding-top:5px;"><i class="fa-regular fa-heart" style="font-size:20px;"></i> &nbsp;</a>
+            <form>
+                <input type="submit" value="Add To Cart">
+            </form>
+           
+        </div>
+    </div>
+
+</div>
+
 {% endblock profile-content %}

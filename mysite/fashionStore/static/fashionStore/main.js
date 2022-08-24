@@ -35,3 +35,7 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
   setInterval(showSlides,3000)
 }
+
+function PasswordM(){
+  document.querySelector('.password-messages').style.display='none';
+}

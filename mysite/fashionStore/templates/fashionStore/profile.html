@@ -4,6 +4,14 @@
 {% block sortMenu %}{% endblock sortMenu %}
 
 {% block ProductContainer %}
+{% if messages %}
+<div class="password-messages">
+    <i class="fa-solid fa-xmark" onclick="PasswordM()"></i>
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|title }}</li>
+    {% endfor %}    
+</div>
+{% endif %}
 <div class="profile-menu">
     {% block profile-menu %}
     <a href="{% url 'fashionStore:Profile'%}"><i class="fa-solid fa-user"></i> &nbsp; My Fashion Account</a>
@@ -30,21 +38,21 @@
     <div class="profile-content-details">
         {% block profile-content-details %}
         <div class="profile-details-holder">
-           <div class="profile-details-header"><a href=""><i class="fa-solid fa-pen"></i></a><p>Account Details</p></div>
+           <div class="profile-details-header"><a href="{% url 'fashionStore:customer-details' %}"><i class="fa-solid fa-pen"></i></a><p>Account Details</p></div>
            <p style="padding:5px;">{{request.user.first_name|title}} {{request.user.last_name|title}}</p>
            <p style="padding:0px 5px; color:lightgray;">{{request.user.email|title}}</p>
            <br/>
 
-           <button class="btn">Change Password</button>
+           <button class="btn"><a href="{% url 'fashionStore:changePassword' %}">Change Password</a></button>
         </div>
 
         <div class="profile-details-holder">
-            <div class="profile-details-header"><a href=""><i class="fa-solid fa-pen"></i></a><p>Address Book</p></div>
+            <div class="profile-details-header"><a href="{% url 'fashionStore:Address-book' %}"><i class="fa-solid fa-pen"></i></a><p>Address Book</p></div>
             <p style="padding:5px;">Your default shipping address:</p>
             <br/>
            <br/>
            <br/>
-            <button class="btn">Add Default Address</button>
+            <button class="btn"><a href="{% url 'fashionStore:Address-book' %}">Add Default Address</a></button>
          </div>
 
          <div class="profile-details-holder">

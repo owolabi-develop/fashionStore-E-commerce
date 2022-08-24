@@ -39,11 +39,13 @@ class StoreManager(BaseUserManager):
         return user
 
 class User(AbstractUser):
+    sex = (("Male","Male"),("Female","Female"))
     username = models.CharField(max_length=255,unique=True,blank=True,null=True)
     email = models.EmailField(max_length=255,unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     phoneNumberRegex = RegexValidator(regex = r"^\d{8,11}$")
+    Gender = models.CharField(max_length=7,choices=sex,blank=True,null=True)
     phoneNumber = models.CharField(validators = [phoneNumberRegex], max_length = 11, unique = True,blank=True,null=True)
 
     objects = StoreManager()

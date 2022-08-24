@@ -1,5 +1,30 @@
 {% extends 'fashionStore/profile.html' %}
 {% load static %}
 {% block profile-content %}
-<div class="profile-content-title">{% block profile-content-title %} Your Wishlist{% endblock profile-content-title %}</div>
+<div class="profile-content-title"> <i class="fa-regular fa-heart" style="font-size:20px;"></i> &nbsp;{% block profile-content-title %} My Wishlist{% endblock profile-content-title %}</div>
+<br/>
+<div class="Wishlist-container">
+    <table>
+        <tr>
+            <thead>
+                <th></th>
+                <th></th>
+                <th>Product Name</th>
+                <th>Unity Price</th>
+                <th>Stock Status</th>
+                <th>Date Added</th>
+                <th></th>
+            </thead>
+        </tr>
+        <tr>
+            <td><a href=""><i class="fa-regular fa-trash-can"></i></a></td>
+            <td><img src="{% static 'images/bags1.jpg' %}" alt="" srcset=""></td>
+            <td>white t-shirt</td>
+            <td><del>500</del> 200</td>
+            <td>In Stock</td>
+            <td>Now</td>
+            <td><form action="" method="post"><input type="submit" value="Add To Cart"></form></td>
+        </tr>
+    </table>
+</div>
 {% endblock profile-content %}

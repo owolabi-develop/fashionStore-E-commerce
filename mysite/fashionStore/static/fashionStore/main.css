@@ -200,6 +200,7 @@ body{
     padding: 20px;
 
 }
+
 .sortMenu{
     display: flex;
     flex-wrap: nowrap;
@@ -848,6 +849,140 @@ background-color: rgb(253, 130, 109);
 .ProductContainer > .profile-content >  .profile-content-details > .profile-details-holder > .btn a{
    text-decoration: none;
     }
+.ProductContainer > .profile-content > .change-password{
+    width: 50%;
+    padding: 20px;
+    
+}
+.ProductContainer > .profile-content > .product-recent-holder{
+    display: flex;
+    flex-wrap: wrap;
+    width:90%;
+}
+.ProductContainer > .profile-content > .change-password input[type=password]{
+    width: 100%;
+    padding: 20px;
+    margin: 20px;
+    
+}
+
+.ProductContainer > .profile-content > .change-password input[type=submit]{
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: tomato;
+    color: aliceblue;
+    cursor: pointer;
+}
+.ProductContainer > .profile-content > .change-details{
+    width: 50%;
+    padding: 10px;
+    margin: 5px;
+    
+}
+.ProductContainer > .profile-content > .change-details input[type=text],select{
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid lightgray;
+}
+
+.ProductContainer > .profile-content > .change-details input[type=submit]{
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: tomato;
+    color: aliceblue;
+    cursor: pointer;
+}
+
+.ProductContainer > .password-messages{
+    width: 98%;
+    padding: 10px;
+    margin: auto;
+    text-align: center;
+    color: aliceblue;
+    font-style: italic;
+    background-color: rgb(6, 116, 114);
+    border-radius: 5px;
+    transition: linear 1s;
+}
+.ProductContainer > .password-messages > .fa-solid{
+    font-size: 25px;
+    float:right;
+    cursor: pointer;
+
+
+}
+.ProductContainer > .password-messages li{
+    list-style: none;
+}
+.ProductContainer > .profile-content > .change-password input[type=submit]:hover{
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    transition: linear 3s;
+    background-color: rgb(222, 96, 74);
+    color: aliceblue;
+    cursor: pointer;
+}
+
+.ProductContainer > .profile-content > .Wishlist-container{
+    width: 90%;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    margin: auto;
+    overflow: auto;
+    
+}
+.ProductContainer > .profile-content > .Wishlist-container table td img{
+    width:50px;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    
+    
+}
+.ProductContainer > .profile-content > .Wishlist-container > table{
+    border-collapse: collapse;
+    width: 100%;
+    
+}
+
+.ProductContainer > .profile-content > .Wishlist-container table ,td ,th{
+    padding: 5px;
+    text-align: justify;
+    color:rgb(95, 95, 95);
+    font-size: 12px;
+
+    
+}
+.ProductContainer > .profile-content > .Wishlist-container table tr{
+   border-bottom: 1px solid lightgray;
+
+    
+}
+.ProductContainer > .profile-content > .Wishlist-container table td input[type=submit]{
+    background-color: tomato;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    padding: 10px;
+    color: aliceblue;
+ 
+     
+ }
 
 
 

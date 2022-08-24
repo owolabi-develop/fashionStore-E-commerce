@@ -18,10 +18,10 @@ urlpatterns = [
     path("Customer/Wishlist/",views.Wishlist,name='Wishlist'),
     path("Customer/Order/",views.UserOrder,name='order'),
     path("Customer/RecentlyViewed/",views.RecentlyView,name='RecentlyView'),
-    path("Customer/Details/",views.userDetails,name='customer-details'),
+    path("Customer/account/edit",views.userDetails,name='customer-details'),
     path("Customer/Change-Password/",views.changePassword,name='changePassword'),
     path("Customer/Address-Book/",views.AddressBook,name='Address-book'),
-    path("Customer/Close-Account/",views.AddressBook,name='close-account'),
+    path("Customer/Close-Account/",views.CloseAccount,name='close-account'),
     path("Customer/NewSeltter/",views.AddressBook,name='new-seletter'),
      
     

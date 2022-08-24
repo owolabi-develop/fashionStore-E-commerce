@@ -72,7 +72,7 @@ class UserEditForm(forms.ModelForm):
             self.fields[field_name].widget.attrs.update({'placeholder':field.label})
     class Meta:
         model = User
-        fields = ['first_name','last_name','email','username']
+        fields = ['first_name','last_name','email','username','Gender']
 
 class UserChangePassword(PasswordChangeForm):
     def __init__(self,*args,**kwargs):

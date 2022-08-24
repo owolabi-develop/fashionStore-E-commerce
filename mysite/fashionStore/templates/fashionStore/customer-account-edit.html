@@ -1,0 +1,18 @@
+{% extends 'fashionStore/profile.html' %}
+{% load static %}
+{% block profile-content %}
+<div class="profile-content-title">{% block profile-content-title %}Details{% endblock profile-content-title %}</div>
+<div class="change-details">
+<form action="{% url 'fashionStore:customer-details' %}" method="post">
+    {% csrf_token %}
+    {{userEditform.non_field_errors}}
+    {% for field in  userEditform %}
+     {{field.label}}
+     <br/>
+     {{field}}
+     {{field.errors}}
+    {% endfor %}
+    <input type="Submit" value="Save">  
+</form>
+</div>
+{% endblock profile-content %}
