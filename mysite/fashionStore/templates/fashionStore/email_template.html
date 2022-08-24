@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> E-mail From FashionStore</title>
+<style>
+
+</style> 
+</head>
+<body>
+    <div style="padding:10px 15px;
+    background:linear-gradient(rgb(22, 66, 66),rgb(4, 116, 160));
+    border-radius: 5px;">
+    {% autoescape off %}
+     <p>Hi {{ user.first_name}}.</p>
+     <br>
+      Click the link buttton below to activate your email:
+      <br/>
+      <br/>
+      <br/>
+ <button style="padding:10px 15px;
+ background:linear-gradient(rgb(22, 66, 66),rgb(4, 116, 160));
+ border-radius: 5px;"><a href="{{ protocol}}://{{ domain }}{% url 'fashionStore:Email-activate' uidb64=uid token=token %}">Activte Your E-mail</a></button>
+    
+    {% endautoescape %}
+</div>
+</body>
+</html>

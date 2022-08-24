@@ -1,0 +1,12 @@
+{% extends 'fashionStore/signup.html' %}
+
+{% block form-wrapper %}
+
+    <div class="signUp_success">
+        <p style="text-align: center; font-size:20px; font-weight:bold"><i class="fa-regular fa-circle-check"></i></p>
+         <p style="text-align: center; font-size:20px; font-weight:bold;"> Registration completed Successfully</p>
+         <p style="text-align: center; font-size:12px;">Please check your registered email for email verification</p>
+         <a href="{% url 'fashionStore:Login' %}"><button class="btn">ok</button></a>
+     </div>
+
+{% endblock form-wrapper %}

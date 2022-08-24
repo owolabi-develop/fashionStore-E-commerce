@@ -1,0 +1,47 @@
+{% extends 'fashionStore/signup.html' %}
+{% block title %}Login{% endblock title %}
+{% block form-wrapper %}
+<h1 style="text-align:center; text-decoration: none;"><a href="{% url 'fashionStore:index' %}" style="text-decoration: none;color: black;">FashionStore</a></h1>
+<div class="form-container">
+    {% block form-container %}
+    <div class="signup-title">{% block signup-title %}<h3>Login</h3>{% endblock signup-title %}</div>
+   
+    {% if messages %}
+    <div class="messages-login">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+<div class="fieldWrapper">
+    <form action="{% url 'fashionStore:Login' %}" method="post">
+        {% csrf_token %}
+        <label for="email">Email</label>
+        <br/>
+        <input type="email" name="email" placeholder="Enter Email Address">
+        <br/>
+        <br/>
+        <label for="password">Password</label>
+        <br/>
+        <input type="password" name="password" placeholder="Enter Password">
+        <br/>
+        <p style="text-align:right;"><a href="{% url 'fashionStore:forgotpassword' %}">Forgot Password</a></p>
+    <input type="submit" value="Login">
+</form>
+
+</div>   
+
+<div class="already">
+    {% block already %}
+    <p>Don't have an Account</p>
+    <a href="{% url 'fashionStore:signup' %}"><button>Create an Account</button></a>
+    {% endblock already %}
+    <br/>
+    <br/>
+</div>
+
+    {% endblock form-container %}
+</div>
+
+
+{% endblock form-wrapper %}

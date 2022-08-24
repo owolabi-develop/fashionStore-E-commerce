@@ -131,12 +131,17 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 #EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'localhost'
+
 #EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 #EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 #EMAIL_USE_TLS = True
 #EMAIL_PORT = 587
+EMAIL_PORT = 8025
+
 #DEFAULT_FROM_EMAIL ='owolabidevelop84@gmail.com'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

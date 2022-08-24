@@ -15,17 +15,25 @@
 <div class="wrapper">
     <!---header menu-->
 <div class="headerMenu">
-    <div class="logo">FsahionStore</div>
+    <div class="logo"><a href="{% url 'fashionStore:index' %}">FashionStore</a></div>
     <div class="searchbar"><form> <input type="search" name="query" id="query" placeholder="Search for product brand and category"></form></div>
     <div class="Account">
+        
         <button class="btn Accountbtn"><i class="fa-solid fa-user-plus"></i> &nbsp;Account</button>
         <div class="Account-sub-menu">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'fashionStore:Profile'%}">My Account</a>
+            {% else %}
             <div class="Signupbtn">
-            <a href="http://">SIGN IN</a>
+            <a href="{% url 'fashionStore:signup' %}">SIGN IN</a>
         </div>
-            <a href="http://">My Account</a>
+        {% endif %}
+           
             <a href="http://">Order</a>
             <a href="http://">Save Item</a>
+            {% if request.user.is_authenticated  %}
+    <a href="{% url 'fashionStore:logout' %}">Logout</a> 
+    {% endif %}
         </div>
     </div>
     <div class="shopcart">
@@ -62,7 +70,9 @@
     <a href="http://">Phone and Tablet</a>
     <a href="http://">baby Product</a>
     <a href="http://">Gameing</a> 
-    <a href="http://">Logout</a> 
+    {% if request.user.is_authenticated  %}
+    <a href="{% url 'fashionStore:logout' %}">Logout</a> 
+    {% endif %}
 
 </div>
 <!--content-wrapper-->

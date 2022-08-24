@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'fashionStore/main.css' %}">
+    <script src="{% static 'fashionStore/main.js' %}"></script>
+    <script src="https://kit.fontawesome.com/18de66c05e.js" crossorigin="anonymous"></script>
+    <title>{% block title %}Signup{% endblock title %}</title>
+</head>
+<body>
+    <div class="forms-wrapper">
+        {% block form-wrapper %}
+        <h1 style="text-align:center ;"><a href="{% url 'fashionStore:index' %}" style="text-decoration: none;color: black;">FashionStore</a></h1>
+        <div class="form-container">
+            {% block form-container %}
+            <div class="signup-title">{% block signup-title %}<h3>Create An Account</h3>{% endblock signup-title %}</div>
+           
+                
+        <div class="fieldWrapper">
+            <form action="{% url 'fashionStore:signup' %}" method="post">
+                {% csrf_token %}
+            {% for field in form %}
+            {{ field.label_tag }} 
+            <br/>
+            {{ field }}
+            <br/>
+            <br/>
+            {{ field.errors }}
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+            {% endfor %}
+            <input type="submit" value="Create an Account">
+        </form>
+        <p style="color: lightgray; font-size:10px; text-align:center;">By signing up you accept our terms and condtions</p>
+        </div>   
+
+        <div class="already">
+            {% block already %}
+            <p>Already have an Account</p>
+           <a href="{% url 'fashionStore:Login' %}"> <button>Login In</button></a>
+            {% endblock already %}
+        </div>
+        
+            {% endblock form-container %}
+        </div>
+
+      
+        {% endblock form-wrapper %}
+    </div>
+    
+</body>
+</html>
