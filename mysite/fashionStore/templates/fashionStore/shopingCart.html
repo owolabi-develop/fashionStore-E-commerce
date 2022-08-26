@@ -1,0 +1,52 @@
+{% extends 'fashionStore/index.html' %}
+{% load static %}
+{% block contentWrapper %}{% endblock contentWrapper %}
+{% block sortMenu %}{% endblock sortMenu %}
+
+{% block ProductContainer %}
+<div class="cart-item">
+<div class="cart-title"><p>Cart(0)</p></div>
+<table>
+    <tr>
+    <thead>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th></th>
+    </thead>
+    </tr>
+    <tr>
+        <td>
+           <p><img src="{% static 'images/bags1.jpg' %}" alt="" srcset="">
+            <b>Black yessow bak for sale</b>
+            <br/>
+            Seller:Owolabi
+            <br/>
+            Brand:Gucci
+        </p>
+        </td>
+        <td> <button class="minus">-</button><input type="text" name="quantity" value="1"><button class="plus">+</button></td>
+        <td><p>2000</p></td>
+        <td><button class="remove-p">Remove</button></td>
+    </tr>
+    
+</table>
+<div class="cart-footer">
+     <a href="http://"><button class="empty-cart" style="float:right ;">Empty Cart</button></a>
+   <a href="{% url 'fashionStore:index' %}"> <button class="continue-shop">Continue Shopping</button></a>
+    
+</div>
+</div>
+
+<div class="cart-summary">
+    <div class="cart-title"><p>Summary</p></div>
+    <p style="padding:0px 10px; font-weight:bold; font-size: 12px;">Subtotal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 10000</p>
+
+    <div class="cart-summary-button">
+        <button class="cart-btn-checkout"><a href="" style="text-decoration: none; color:aliceblue">Checkout (N 1000)</a></button>
+    </div>
+</div>
+
+{% endblock ProductContainer %}
+
+{% block paginationholder %}{% endblock paginationholder %}

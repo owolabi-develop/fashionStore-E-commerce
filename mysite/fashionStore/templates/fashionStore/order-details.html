@@ -1,0 +1,54 @@
+{% extends 'fashionStore/profile.html' %}
+{% load static %}
+{% block profile-content %}
+<div class="profile-content-title">{% block profile-content-title %} Order Details{% endblock profile-content-title %}</div>
+ <div class="order-id">
+    <p style="font-weight:bold;">Order ID 1955o99</p>
+    <span>Item 2</span>
+    <br/>
+    <span>Placed today</span>
+    <br/>
+    <span>Total 2000</span>
+</div>
+<div class="orders-items">
+    <div class="orders-products">
+        <div class="order-product-details">
+            <p>black tisrte</p>
+            <p>Qty: 2</p>
+            <p>2000</p>
+        </div>
+<img src="{% static 'images/bags1.jpg' %}" alt="" srcset="">
+    </div>
+<div class="orders-buttons">
+   <a href="{% url 'fashionStore:order_details' %}"> <button class="orders-details">Track Item</button></a>
+   <br/>
+   <br/>
+   <br/>
+   <br/>
+   <a href="{% url 'fashionStore:order_details' %}"> <button class="orders-details">Cancel Item</button></a>
+</div>        
+</div>
+<div class="order-methods">
+    <div class="methods-info">
+        <div class="methods-title">PAYMENT INFOMATION</div>
+        <p>Payment Method</p>
+        <span>Cash On Delivery</span>
+
+        <p>Payment Details</p>
+        <span>Total 14000</span>
+        <br/>
+        <br/>
+    </div>
+
+    <div class="methods-info">
+        <div class="methods-title">DELIVERY INFOMATION</div>
+        <p>Delivery Method</p>
+        <span>Standard Door Delivery</span>
+
+        <p>Shipping Address</p>
+        <span>11 junsctup</span>
+        <br/>
+        <br/>
+    </div>
+</div>
+{% endblock profile-content %}

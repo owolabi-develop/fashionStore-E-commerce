@@ -23,9 +23,9 @@ urlpatterns = [
     path("Customer/Address-Book/",views.AddressBook,name='Address-book'),
     path("Customer/Close-Account/",views.CloseAccount,name='close-account'),
     path("Customer/NewSeltter/",views.AddressBook,name='new-seletter'),
-     
-    
-
+    path("Customer/Cart/",views.ShopingCart,name='Shoping-cart'),
+    path("Customer/Checkout/",views.Checkoutpage,name=' Checkout-page'),
+    path("Customer/orders/details",views.order_details,name='order_details'),
     path("Logout/",views.User_logOut,name='logout'),
     path("PasswordRestDown/",views.password_down,name='password-down'),
     path('passwordchangcomplete/',views.password_reset_complete,name='password_reset_complete'),

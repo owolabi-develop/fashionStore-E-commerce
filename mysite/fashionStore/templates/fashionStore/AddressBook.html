@@ -1,5 +1,57 @@
-{% extends 'fashionStore/profile.html' %}
+{% extends 'fashionStore/index.html' %}
 {% load static %}
-{% block profile-content %}
-<div class="profile-content-title">{% block profile-content-title %} Shipping Address{% endblock profile-content-title %}</div>
-{% endblock profile-content %}
+{% block contentWrapper %}{% endblock contentWrapper %}
+{% block sortMenu %}{% endblock sortMenu %}
+
+{% block ProductContainer %}
+{% if messages %}
+<div class="password-messages">
+    <i class="fa-solid fa-xmark" onclick="PasswordM()"></i>
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|title }}</li>
+    {% endfor %}    
+</div>
+{% endif %}
+<div class="profile-menu">
+    {% block profile-menu %}
+    <a href="{% url 'fashionStore:Profile'%}"><i class="fa-solid fa-user"></i> &nbsp; My Fashion Account</a>
+    <div class="userItem">
+    <a href="{% url 'fashionStore:order'%}"> orders</a>
+    <a href="{% url 'fashionStore:Wishlist' %}">Saved items</a>
+    <a href="{% url 'fashionStore:RecentlyView' %}"> Recently Viewed</a>
+    <a href="#">Pending Reviewed</a>
+</div>
+  <div class="userdetails">
+    <a href="{% url 'fashionStore:customer-details' %}">Details</a>
+    <a href="{% url 'fashionStore:Address-book' %}">Address Book</a>
+    <a href="{% url 'fashionStore:changePassword' %}">Change Password</a>
+    <a href="{% url 'fashionStore:new-seletter' %}">Newseletter Preference</a>
+    <a href="{% url 'fashionStore:close-account' %}">Close Account</a>
+
+  </div>
+  <a href="{% url 'fashionStore:Login' %}">Logout</a>
+  {% endblock profile-menu %}
+</div>
+<div class="profile-content">
+    {% block profile-content %}
+    <div class="profile-content-title">{% block profile-content-title %}Addresses{% endblock profile-content-title %}</div>
+    <div class="profile-content-details">
+        {% block profile-content-details %}
+        <div class="profile-details-holder">
+            <div class="profile-details-header"><a href="{% url 'fashionStore:Address-book' %}"><i class="fa-solid fa-pen"></i></a><p>Address</p></div>
+            <p style="padding:5px;">Your default shipping address:</p>
+            <br/>
+           <br/>
+           <br/>
+         </div>
+
+         
+
+
+        {% endblock profile-content-details %}
+    </div>
+    {% endblock profile-content %}
+</div>
+{% endblock ProductContainer %}
+
+{% block paginationholder %}{% endblock paginationholder %}

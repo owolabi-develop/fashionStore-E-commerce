@@ -51,13 +51,15 @@ body{
    
 }
 
-.shopcart > .fa-solid{
+.shopcart > a > .fa-solid{
     cursor: pointer;
     font-weight:bold;
     font-size: 25px;
     color: rgb(102, 104, 105);
+    text-decoration: none;
 }
-.shopcart > span{
+.shopcart > a > span{
+    text-decoration: none;
     background-color: tomato;
     padding: 4px;
     border-radius: 100%;
@@ -979,10 +981,214 @@ background-color: rgb(253, 130, 109);
     cursor: pointer;
     border: none;
     padding: 10px;
-    color: aliceblue;
- 
-     
+    color: aliceblue;   
  }
+ .ProductContainer > .cart-item{
+    flex: 75%;
+    overflow: auto;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: rgb(247, 243, 243);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ }
+
+ .ProductContainer > .cart-summary{
+    flex: 20%;
+    height: 150px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: rgb(247, 243, 243);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ }
+ .ProductContainer > .cart-item > table{
+   width: 100%;
+  
+ }
+ .ProductContainer > .cart-item > table tr{
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+   
+  }
+ .ProductContainer > .cart-item > table td p img{
+   width: 80px;
+   float: left;
+   height: 80px;
+   border-radius: 5px;
+   margin: 0px 12px 0px 3px;
+ }
+
+ .ProductContainer > .cart-item > .cart-footer{
+    width: 100%;
+    border-top: 1px solid lightgrey;
+    padding: 10px;
+  }
+
+  .ProductContainer > .cart-item > .cart-footer a button{
+    width: 150px;
+    color: aliceblue;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: tomato;
+    padding: 10px;
+  }
+
+ .ProductContainer > .cart-item > table td input[type=text]{
+    width: 40px;
+    height: 30px;
+    margin: 0px;
+    border: none;
+    background: none;
+    text-align: center;
+    border-radius: 5px;
+   
+  }
+  .ProductContainer > .cart-item > table td .remove-p{
+    width: 100px;
+    height: 30px;
+    margin: 0px;
+    text-align: center;
+    color: aliceblue;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: tomato;
+   
+  }
+  .ProductContainer > .cart-item > table td > .minus ,.plus{
+    width: 30px;
+    height: 30px;
+    margin: 0px;
+    text-align: center;
+    color: aliceblue;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: tomato;
+   
+  }
+ .ProductContainer > .cart-summary > .cart-title{
+    width: 100%;
+    height: 30px;
+    padding-left: 5px;
+    border-bottom: 1px solid lightgray;
+ }
+
+ .ProductContainer > .cart-item > .cart-title{
+    width: 100%;
+    height: 30px;
+    padding-left: 5px;
+    border-bottom: 1px solid lightgray;
+ }
+
+ .ProductContainer > .cart-summary > .cart-summary-button{
+    width: 100%;
+    height: 30px;
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid lightgray;
+ }
+
+ .ProductContainer > .cart-summary > .cart-summary-button button{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    color: aliceblue;
+    outline: none;
+    background-color: tomato;
+    cursor: pointer;
+ }
+
+ .ProductContainer > .profile-content >  .orders-items{
+    width: 95%;
+    margin: auto;
+    margin-top: 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ProductContainer > .profile-content >  .order-id{
+    width: 95%;
+    margin: auto;
+    margin-top: 10px;
+    border-bottom: 1px solid lightgray;
+    padding: 5px;
+}
+.ProductContainer > .profile-content >  .order-id > span{
+    font-size: 15px;
+    color: lightgray;
+    
+}
+.ProductContainer > .profile-content >  .orders-items > .orders-products img{
+    width:150px;
+    height: 150px;
+}
+.ProductContainer > .profile-content >  .orders-items > .orders-products{
+    flex:20%;
+    padding: 5px;
+    margin: 5px;
+   
+}
+.ProductContainer > .profile-content > .orders-items > .orders-products > .order-product-details{
+    float: right;
+    width:65%;
+   
+}
+
+.ProductContainer > .profile-content >  .orders-items > .orders-buttons{
+    flex:20%;
+    padding: 5px;
+    margin: 5px;
+}
+
+.ProductContainer > .profile-content >  .orders-items > .orders-buttons > a .orders-details{
+    width:120px;
+    padding: 10px;
+    border-radius: 5px;
+    background: tomato;
+    border: none;
+    float: right;
+    color: white;
+    cursor: pointer;
+}
+
+.ProductContainer > .profile-content >  .order-methods{
+    width: 95%;
+    margin: auto;
+   display: flex;
+   flex-wrap: wrap;
+  
+}
+
+.ProductContainer > .profile-content >  .order-methods > .methods-info{
+    flex: 40%;
+    margin:5px;  
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+.ProductContainer > .profile-content >  .order-methods > .methods-info p{
+    font-weight: bolder;
+    padding: 10px;
+    
+}
+.ProductContainer > .profile-content >  .order-methods > .methods-info span{
+    font-size: 14px;
+    padding: 10px;
+    color: lightgrey;
+    
+}
+
+.ProductContainer > .profile-content >  .order-methods > .methods-info > .methods-title{
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+    padding: 5px;
+}
+
+
 
 
 

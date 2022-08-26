@@ -146,6 +146,7 @@ def UserProfile(request):
 @login_required(login_url='/Userlogin/')
 def Wishlist(request):
   return render(request,'fashionStore/whishlist.html')
+
 @login_required(login_url='/Userlogin/')
 def UserOrder(request):
   return render(request,'fashionStore/order.html')
@@ -186,5 +187,25 @@ def AddressBook(request):
   return render(request,'fashionStore/AddressBook.html')
 
 @login_required(login_url='/Userlogin/')
+def AddressBook_create(request):
+  return render(request,'fashionStore/AddressBook.html')
+
+@login_required(login_url='/Userlogin/')
+def AddressBook_Edit(request):
+  return render(request,'fashionStore/AddressBook.html')
+
+@login_required(login_url='/Userlogin/')
 def NewsSeletter(request):
   return render(request,'fashionStore/NewsSeletter.html')
+
+@login_required(login_url='/Userlogin/')
+def ShopingCart(request):
+  return render(request,'fashionStore/shopingCart.html')
+
+@login_required(login_url='/Userlogin/')
+def Checkoutpage(request):
+  return render(request,'fashionStore/shopingCart.html')
+
+@login_required(login_url='/Userlogin/')
+def order_details(request):
+  return render(request,'fashionStore/order-details.html')

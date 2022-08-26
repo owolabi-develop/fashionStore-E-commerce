@@ -2,4 +2,18 @@
 {% load static %}
 {% block profile-content %}
 <div class="profile-content-title">{% block profile-content-title %} Your Order{% endblock profile-content-title %}</div>
+
+<div class="orders-items">
+    <div class="orders-products">
+        <div class="order-product-details">
+            <p>black tisrte</p>
+            <p>Qty: 2</p>
+            <p>2000</p>
+        </div>
+<img src="{% static 'images/bags1.jpg' %}" alt="" srcset="">
+    </div>
+<div class="orders-buttons">
+   <a href="{% url 'fashionStore:order_details' %}"> <button class="orders-details">See Details</button></a>
+</div>        
+</div>
 {% endblock profile-content %}
