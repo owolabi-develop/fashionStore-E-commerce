@@ -1,3 +1,5 @@
+import secrets
+import string
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser,BaseUserManager
@@ -6,6 +8,7 @@ from django.core.validators import FileExtensionValidator
 from django.utils import timezone
 from datetime import date
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 class StoreManager(BaseUserManager):
     def create_user(self, email, date_of_birth, password=None):
         """
@@ -77,3 +80,95 @@ class Profile(models.Model):
 
     def __str__(self) -> str:
         return self.User.email
+
+class Customer(models.Model):
+   User = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+
+   def __str__(self) -> str:
+        return "%s %s" % (self.User.first_name, self.User.last_name)
+
+
+class WhishList(models.Model):
+     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    def __str__(self) -> str:
+        return self.name
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.FloatField()
+    image = models.FileField(upload_to='product/')
+    desc = models.TextField(max_length=255)
+    WhishList = models.ForeignKey(WhishList,on_delete=models.SET_NULL, null=True,blank=True)
+
+    def __str__(self) -> str:
+        return self.name
+    
+
+class order(models.Model):
+    del_method = (("standard door delivery","standard door delivery"),("Pickup Station","Pickup Station"))
+    pay_method = (("Pay on delivery","on delivery"),("with Card","with Card"))
+    tra_id = ''.join(secrets.choice(string.digits) for i in range(10))
+    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True)
+    order_date = models.DateField(auto_now_add=True)
+    placed = models.BooleanField(default=False,null=True,blank=True)
+    transction_id = models.CharField(max_length=20,unique=True,default=tra_id)
+    delivery_method = models.BooleanField(max_length=255,choices=del_method)
+    payment_method = models.BooleanField(max_length=255,choices=pay_method )
+   
+    def __str__(self) -> str:
+        return self.transction_id
+
+     
+    @property
+    def cart_total(self):
+        orderitem = self.orderitem_set.all()
+        total = sum([item.total_price for item in orderitem])
+        return total
+
+    @property
+    def cart_item(self):
+        orderitem = self.orderitem_set.all()
+        total = sum([item.quantity for item in orderitem])
+        return total
+
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,blank=True)
+    order = models.ForeignKey(order,on_delete=models.SET_NULL,null=True,blank=True)
+    quantity = models.CharField(default=1,null=True,blank=True,max_length=12)
+    date_added =models.DateField(auto_now_add=True)
+
+    @property
+    def total_price(self):
+        total = self.product.price * self.quantity
+        return total
+
+
+    
+
+class State(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self) -> str:
+        return self.name
+
+class city(models.Model):
+    name = models.CharField(max_length=255)
+    def __str__(self) -> str:
+        return self.name
+
+class AddressBook(models.Model):
+    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
+    order = models.ForeignKey(order,on_delete=models.SET_NULL,blank=True,null=True)
+    State = models.ForeignKey(State,on_delete=models.SET_NULL,blank=True,null=True)
+    City= models.ForeignKey(city, on_delete=models.SET_NULL,blank=True,null=True)
+    Street_address = models.CharField(max_length=255)
+    zip_code = models.CharField(max_length=17)
+    default_address = models.BooleanField(default=True,null=True,blank=True)
+
+    def __str__(self):
+        return self.Street_address
+    
+

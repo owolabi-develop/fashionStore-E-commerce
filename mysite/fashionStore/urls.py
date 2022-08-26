@@ -28,6 +28,5 @@ urlpatterns = [
     path("Customer/orders/details",views.order_details,name='order_details'),
     path("Logout/",views.User_logOut,name='logout'),
     path("PasswordRestDown/",views.password_down,name='password-down'),
-    path('passwordchangcomplete/',views.password_reset_complete,name='password_reset_complete'),
-    
+    path('passwordchangcomplete/',views.password_reset_complete,name='password_reset_complete'),    
 ]

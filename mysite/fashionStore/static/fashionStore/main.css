@@ -90,7 +90,15 @@ body{
     display: flex;
     flex-wrap: wrap;
 }
-.linkMenu a{
+.linkMenu > .category-menu{
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: aliceblue;
+    margin-left: 20px;
+    font-size: 12px;
+}
+.linkMenu > .category-menu a{
     text-align: center;
     text-decoration: none;
     padding: 10px 20px;
@@ -475,8 +483,8 @@ body{
 }
 .linkMenu .navbar{
     padding-top: 2px;
-    width:40px;
-    margin-left: 10px;
+    width:38px;
+    margin-left: 8px;
     display: none;
 }
 .linkMenu .navbar div{
@@ -486,6 +494,7 @@ body{
     margin: 4px;
     border-radius: 2px;
     cursor: pointer;
+    text-align: center;
 }
 .linkMenu .navbar:hover div{
     background-color: rgb(198, 130, 130);
@@ -1268,12 +1277,13 @@ background-color: rgb(253, 130, 109);
         top: 90%;
         left: 40%;
     }
+    .linkMenu  > .category-menu a{
+        display: none;
+    }
     .linkMenu .navbar{
         display: block;
     }
-    .linkMenu a{
-        display: none;
-    }
+    
 
     .CategoryHolder{
         display: none;
