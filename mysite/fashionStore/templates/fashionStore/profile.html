@@ -4,14 +4,7 @@
 {% block sortMenu %}{% endblock sortMenu %}
 
 {% block ProductContainer %}
-{% if messages %}
-<div class="password-messages">
-    <i class="fa-solid fa-xmark" onclick="PasswordM()"></i>
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|title }}</li>
-    {% endfor %}    
-</div>
-{% endif %}
+
 <div class="profile-menu">
     {% block profile-menu %}
     <a href="{% url 'fashionStore:Profile'%}"><i class="fa-solid fa-user"></i> &nbsp; My Fashion Account</a>

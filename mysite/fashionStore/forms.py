@@ -19,7 +19,10 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name','last_name','email','phoneNumber')
+        fields = ('first_name','last_name','email','phoneNumber','subscribe')
+        widgets ={
+            'subscribe':forms.CheckboxInput,
+        }
 
     def clean_password2(self):
         # Check that the two password entries match

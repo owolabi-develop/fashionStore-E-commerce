@@ -272,12 +272,16 @@ body{
  .Productholder .checked {
     color:tomato;
   }
+.Productholder img{
+    height:200px;
+    width:200px;
+  }
 
 .Productholder{
     border-radius: 5px;
     margin: 10px;
     overflow: hidden;
-    width:200px;
+    width:190px;
     text-align: center;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -915,25 +919,24 @@ background-color: rgb(253, 130, 109);
     cursor: pointer;
 }
 
-.ProductContainer > .password-messages{
-    width: 98%;
+.password-messages{
+    width: 100%;
     padding: 10px;
     margin: auto;
     text-align: center;
     color: aliceblue;
     font-style: italic;
     background-color: rgb(6, 116, 114);
-    border-radius: 5px;
     transition: linear 1s;
 }
-.ProductContainer > .password-messages > .fa-solid{
+.password-messages > .fa-solid{
     font-size: 25px;
     float:right;
     cursor: pointer;
 
 
 }
-.ProductContainer > .password-messages li{
+.password-messages li{
     list-style: none;
 }
 .ProductContainer > .profile-content > .change-password input[type=submit]:hover{
@@ -1306,6 +1309,14 @@ background-color: rgb(253, 130, 109);
         top: 11px;
         z-index: 1000;
         color: aliceblue;
+    }
+.paginationholder{
+        display: flex;
+        flex-wrap: nowrap;
+        margin: auto;
+        width: 100%;
+        padding: 20px;
+        margin-bottom: 20px;
     }
 }
 @media screen and (min-width:600px) {

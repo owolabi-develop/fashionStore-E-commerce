@@ -1,4 +1,4 @@
-from multiprocessing import reduction
+
 from django.utils import timezone
 from datetime import datetime
 from django.core import serializers
@@ -24,19 +24,24 @@ from django.contrib.auth import get_user_model
 from django.core.mail import EmailMessage,send_mail,EmailMultiAlternatives
 from . tokens import account_activation_token
 from django.urls import reverse, reverse_lazy
-from . models import Profile
+from . models import Profile,OrderItem,order,State,city,AddressBook,WhishList,Product
 from django.contrib.auth.views import PasswordResetConfirmView,PasswordResetCompleteView
 from .forms import UserCreationForm,UserChangePassword,UserSetPassword,UserPasswordResetForm,User,UserEditForm,ProfileForm
 
 def index(request):
-    return render(request,'FashionStore/index.html',{})
+  products = Product.objects.all()
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  print(orders.cart_total)
+  return render(request,'FashionStore/index.html',{'product':products,'orders':orders})
 
 def details(request,product_id=1):
   return render(request,'FashionStore/details.html',{})
 
 
-def Category(request,product_title='bag'):
-  return render(request,'FashionStore/category.html',{})
+def Category(request,category_name):
+  category = get_object_or_404(Category,name=category_name)
+  return render(request,'FashionStore/category.html',{'category':category})
 
 def post_save_Profile(sender,instance,created,**kwargs):
     if created:
@@ -145,7 +150,17 @@ def UserProfile(request):
 
 @login_required(login_url='/Userlogin/')
 def Wishlist(request):
-  return render(request,'fashionStore/whishlist.html')
+  customer = request.user.customer
+  saveItem = customer.whishlist_set.all()
+  return render(request,'fashionStore/whishlist.html',{'saveItem':saveItem})
+
+def add_Wishlist(request,product_id):
+  product = get_object_or_404(Product,pk=product_id)
+  customer = request.user.customer
+  item,created = WhishList.objects.get_or_create(product=product,customer=customer)
+  if created:
+    messages.success(request,"Product add to Wishlist")
+  return HttpResponseRedirect(reverse("fashionStore:index"))
 
 @login_required(login_url='/Userlogin/')
 def UserOrder(request):
@@ -198,9 +213,22 @@ def AddressBook_Edit(request):
 def NewsSeletter(request):
   return render(request,'fashionStore/NewsSeletter.html')
 
-@login_required(login_url='/Userlogin/')
+
 def ShopingCart(request):
-  return render(request,'fashionStore/shopingCart.html')
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  item = orders.orderitem_set.all()
+  print(orders.cart_total)
+  return render(request,'fashionStore/shopingCart.html',{'item':item,'orders':orders})
+
+def addtocart(request,product_id):
+  product =get_object_or_404(Product,pk=product_id)
+  customer = request.user.customer
+  orders,created = order.objects.get_or_create(customer=customer,placed=False)
+  item,OrderCreate = OrderItem.objects.get_or_create(product=product,order=orders)
+  if OrderCreate:
+    messages.success(request,'product was add to card')
+  return HttpResponseRedirect(reverse('fashionStore:index'))
 
 @login_required(login_url='/Userlogin/')
 def Checkoutpage(request):

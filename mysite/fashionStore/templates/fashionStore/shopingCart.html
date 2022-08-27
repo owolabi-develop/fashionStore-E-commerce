@@ -5,7 +5,7 @@
 
 {% block ProductContainer %}
 <div class="cart-item">
-<div class="cart-title"><p>Cart(0)</p></div>
+<div class="cart-title"><p>Cart({{orders.cart_item}})</p></div>
 <table>
     <tr>
     <thead>
@@ -15,21 +15,23 @@
         <th></th>
     </thead>
     </tr>
+    {% if item %}
+    {% for items in item %}
     <tr>
         <td>
-           <p><img src="{% static 'images/bags1.jpg' %}" alt="" srcset="">
-            <b>Black yessow bak for sale</b>
+           <p><img src="{{items.product.image.url}}" alt="" srcset="">
+            <b>{{items.product.name}}</b>
             <br/>
-            Seller:Owolabi
-            <br/>
-            Brand:Gucci
-        </p>
+        
         </td>
-        <td> <button class="minus">-</button><input type="text" name="quantity" value="1"><button class="plus">+</button></td>
-        <td><p>2000</p></td>
+        <td> <button class="minus">-</button><input type="text" name="quantity" value="{{items.quantity}}"><button class="plus">+</button></td>
+        <td><p>&#8358;{{items.total_price}}</p></td>
         <td><button class="remove-p">Remove</button></td>
     </tr>
-    
+    {% endfor %}
+    {% else %}
+    <p>Your Cart is Empty</p>
+    {% endif %}
 </table>
 <div class="cart-footer">
      <a href="http://"><button class="empty-cart" style="float:right ;">Empty Cart</button></a>
@@ -40,10 +42,10 @@
 
 <div class="cart-summary">
     <div class="cart-title"><p>Summary</p></div>
-    <p style="padding:0px 10px; font-weight:bold; font-size: 12px;">Subtotal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 10000</p>
+    <p style="padding:0px 10px; font-weight:bold; font-size: 12px;">Subtotal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{orders.cart_total}} </p>
 
     <div class="cart-summary-button">
-        <button class="cart-btn-checkout"><a href="" style="text-decoration: none; color:aliceblue">Checkout (N 1000)</a></button>
+        <button class="cart-btn-checkout"><a href="" style="text-decoration: none; color:aliceblue">Checkout (&#8358;{{orders.cart_total}})</a></button>
     </div>
 </div>
 

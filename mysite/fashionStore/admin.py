@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import Customer, User,Product,city,State,order,OrderItem,Category,WhishList,AddressBook
 from .forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import Group
@@ -51,5 +51,14 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
    
 admin.site.register(User, UserAdmin)
+admin.site.register(Product)
+admin.site.register(Category)
+admin.site.register(city)
+admin.site.register(State)
+admin.site.register(AddressBook)
+admin.site.register(OrderItem)
+admin.site.register(order)
+admin.site.register(Customer)
+
 
 admin.site.unregister(Group)

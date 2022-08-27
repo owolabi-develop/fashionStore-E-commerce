@@ -9,8 +9,8 @@ from django.utils import timezone
 from datetime import date
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-class StoreManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+class FashionManager(BaseUserManager):
+    def create_user(self, email,phoneNumber, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -20,14 +20,14 @@ class StoreManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
+            phoneNumber=phoneNumber,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, password=None):
+    def create_superuser(self, email,  phoneNumber, password=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -35,7 +35,7 @@ class StoreManager(BaseUserManager):
         user = self.create_user(
             email,
             password=password,
-            date_of_birth=date_of_birth,
+            phoneNumber=phoneNumber,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -50,8 +50,8 @@ class User(AbstractUser):
     phoneNumberRegex = RegexValidator(regex = r"^\d{8,11}$")
     Gender = models.CharField(max_length=7,choices=sex,blank=True,null=True)
     phoneNumber = models.CharField(validators = [phoneNumberRegex], max_length = 11, unique = True,blank=True,null=True)
-
-    objects = StoreManager()
+    subscribe = models.BooleanField(verbose_name='i want to recieve fashionStore Newsletter',default=False,blank=True,null=True)
+    objects = FashionManager()
     USERNAME_FIELD ='email'
     REQUIRED_FIELDS = ['phoneNumber']
     
@@ -85,44 +85,44 @@ class Customer(models.Model):
    User = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
    def __str__(self) -> str:
-        return "%s %s" % (self.User.first_name, self.User.last_name)
+        return self.User.first_name
 
 
-class WhishList(models.Model):
-     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+
     def __str__(self) -> str:
         return self.name
 
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10,decimal_places=2)
     image = models.FileField(upload_to='product/')
     desc = models.TextField(max_length=255)
-    WhishList = models.ForeignKey(WhishList,on_delete=models.SET_NULL, null=True,blank=True)
+    category = models.ManyToManyField(Category)
+   
 
     def __str__(self) -> str:
         return self.name
     
+class WhishList(models.Model):
+     product = models.ForeignKey(Product,on_delete=models.SET_NULL, null=True,blank=True)
+     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL, null=True,blank=True)
 
 class order(models.Model):
     del_method = (("standard door delivery","standard door delivery"),("Pickup Station","Pickup Station"))
     pay_method = (("Pay on delivery","on delivery"),("with Card","with Card"))
-    tra_id = ''.join(secrets.choice(string.digits) for i in range(10))
+    tra_id =''.join(secrets.choice(string.digits) for i in range(10))
     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True)
     order_date = models.DateField(auto_now_add=True)
     placed = models.BooleanField(default=False,null=True,blank=True)
-    transction_id = models.CharField(max_length=20,unique=True,default=tra_id)
-    delivery_method = models.BooleanField(max_length=255,choices=del_method)
-    payment_method = models.BooleanField(max_length=255,choices=pay_method )
+    transction_id = models.CharField(max_length=20,unique=True,null=True,blank=True)
+    delivery_method = models.BooleanField(max_length=255,choices=del_method,null=True,blank=True)
+    payment_method = models.BooleanField(max_length=255,choices=pay_method,null=True,blank=True)
    
-    def __str__(self) -> str:
-        return self.transction_id
-
-     
     @property
     def cart_total(self):
         orderitem = self.orderitem_set.all()
@@ -138,9 +138,8 @@ class order(models.Model):
 class OrderItem(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,blank=True)
     order = models.ForeignKey(order,on_delete=models.SET_NULL,null=True,blank=True)
-    quantity = models.CharField(default=1,null=True,blank=True,max_length=12)
+    quantity = models.IntegerField(default=1)
     date_added =models.DateField(auto_now_add=True)
-
     @property
     def total_price(self):
         total = self.product.price * self.quantity
@@ -156,6 +155,7 @@ class State(models.Model):
 
 class city(models.Model):
     name = models.CharField(max_length=255)
+    State = models.ForeignKey(State,on_delete=models.CASCADE,null=True,blank=True)
     def __str__(self) -> str:
         return self.name
 
