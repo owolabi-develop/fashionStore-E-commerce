@@ -1,5 +1,8 @@
 {% extends 'fashionStore/index.html' %}
 {% load static %}
+{% block shopcart %}
+<a href="{% url 'fashionStore:Shoping-cart' %}" style="text-decoration:none;"><i class="fa-solid fa-cart-shopping"></i> <span>{{orders.cart_item}}</span><a/>
+    {% endblock shopcart %}
 {% block contentWrapper %}{% endblock contentWrapper %}
 {% block sortMenu %}{% endblock sortMenu %}
 
@@ -45,7 +48,7 @@
             <br/>
            <br/>
            <br/>
-            <button class="btn"><a href="{% url 'fashionStore:Address-book' %}">Add Default Address</a></button>
+            <button class="btn"><a href="{% url 'fashionStore:Create-Address-book' %}">Add Default Address</a></button>
          </div>
 
          <div class="profile-details-holder">

@@ -18,7 +18,7 @@
         {% if saveItem %}
         {% for saveItems in saveItem %}
         <tr>
-            <td><a href=""><i class="fa-regular fa-trash-can"></i></a></td>
+            <td><a href="{% url 'fashionStore:remove-Wishlist' saveItems.product.id %}"><i class="fa-regular fa-trash-can"></i></a></td>
             <td><img src="{{saveItems.product.image.url}}" alt="" srcset=""></td>
             <td>{{saveItems.product.name}}</td>
             <td>{{saveItems.product.price}}</td>
@@ -27,6 +27,8 @@
             <td><form action="{% url 'fashionStore:add-to-cart' saveItems.product.id %}" method="post"><input type="submit" value="Add To Cart">{% csrf_token %}</form></td>
         </tr>
         {% endfor %}
+        {% else %}
+        <p style="text-align:center;">Your WishList is empty</p>
         {% endif %}
     </table>
 </div>

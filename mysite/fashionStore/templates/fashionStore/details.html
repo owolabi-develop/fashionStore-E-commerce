@@ -1,19 +1,19 @@
 {% extends 'fashionStore/index.html' %}
 {% load static %}
+
 {% block contentWrapper %}{% endblock contentWrapper %}
-{% block sortMenu %}{% endblock sortMenu %}
 
 {% block ProductContainer %}
 <div class="product-data">
     <div class="product-image">
         <div>
-            <img src="{% static 'images/images (66).jpg' %}">
+            <img src="{{product.image.url}}">
           </div>
 
     </div>
     <div class="product-title">
-        <p>Saisho Sandwich Maker Toaster S-609 2F(6) - White</p>
-        <p>Brand:Brand: Saisho | Similar products from Saisho</p>
+        <p>{{product.name}}</p>
+        <p>{{product.brand}}</p>
         <p>
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
@@ -21,13 +21,11 @@
             <span class="fa fa-star"></span>
             <span class="fa fa-star"></span>
             </p>
-            <p style="font-weight: bold;">N 5,700</p>
-            <form>
-                <input type="number" name="quantity" value="1" id="quantity">
-            </form>
-            <div class="detail-cart-btn">Add To Cart</div>
+            <p style="font-weight: bold;">&#8358; {{product.price}}</p>
+           <a href ="{% url 'fashionStore:add-to-cart' product.id %}" style="text-decoration:none;"> <div class="detail-cart-btn">Add To Cart</div></a>
             <br>
             <p style="font-weight: bold;">Product Details</p>
+            <p>{{product.desc}}</p>
     </div>
 </div>
 <!--delivery and return-->
@@ -77,10 +75,13 @@
 <div class="also-like">
     <h3>You may also like</h3>
     <div class="also-like-data">
+        {% if related_p %}
+        {% for  related_p in  related_p %}
+        <a href="{% url 'fashionStore:details' related_p.id %}" style="text-decoration:none;color:tomato;">
         <div class="Productholder">
-            <img src="{% static 'images/bags1.jpg' %}">
-            <p style="font-weight:bold;">black leather bag</p>
-            <p>$ 100</p>
+            <img src="{{related_p.image.url}}">
+            <p style="font-weight:bold;">{{related_p.name|title}}</p>
+            <p>&#8358;{{related_p.price}}</p>
             <p>
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
@@ -88,12 +89,10 @@
             <span class="fa fa-star"></span>
             <span class="fa fa-star"></span>
             </p>
-            <div class="cartbtn">
-                <form>
-                    <input type="submit" value="Add To Cart">
-                </form>
-            </div>
-        </div>
+          
+        </div></a>
+        {% endfor %}
+        {% endif %}
     </div>
 
 </div>
@@ -112,12 +111,7 @@
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
-        </p>
-        <div class="cartbtn">
-            <form>
-                <input type="submit" value="Add To Cart">
-            </form>
-        </div>
+
     </div>
 </div>
 </div>

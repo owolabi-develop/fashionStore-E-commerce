@@ -95,7 +95,18 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
+class ProductSize(models.Model):
+    size = models.CharField(max_length=255,blank=True,null=True)
+    
+    def __str__(self):
+        return self.size
 
+class ProductBrand(models.Model):
+    brand = models.CharField(max_length=255,blank=True,null=True)
+    
+    def __str__(self):
+        return self.brand
+    
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
@@ -103,6 +114,8 @@ class Product(models.Model):
     image = models.FileField(upload_to='product/')
     desc = models.TextField(max_length=255)
     category = models.ManyToManyField(Category)
+    sizes = models.ManyToManyField(ProductSize)
+    brand = models.ManyToManyField(ProductBrand)
    
 
     def __str__(self) -> str:
@@ -134,7 +147,7 @@ class order(models.Model):
         orderitem = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitem])
         return total
-
+        
 class OrderItem(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,blank=True)
     order = models.ForeignKey(order,on_delete=models.SET_NULL,null=True,blank=True)
@@ -145,30 +158,34 @@ class OrderItem(models.Model):
         total = self.product.price * self.quantity
         return total
 
-
-    
-
-class State(models.Model):
-    name = models.CharField(max_length=200)
-    def __str__(self) -> str:
-        return self.name
-
-class city(models.Model):
-    name = models.CharField(max_length=255)
-    State = models.ForeignKey(State,on_delete=models.CASCADE,null=True,blank=True)
-    def __str__(self) -> str:
-        return self.name
-
 class AddressBook(models.Model):
+    address_state = (
+        (None,"Please Select"),
+        ("Delta","Delta"),
+        ("Lagos","Lagos"),
+        ("Abuja","Abuja"),
+        ("Kano","Kano"),
+        ("Rivers","Rivser"),
+        ("Jos","Jos"),
+        ("Sokoto","Sokoto"),
+    )
     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
     order = models.ForeignKey(order,on_delete=models.SET_NULL,blank=True,null=True)
-    State = models.ForeignKey(State,on_delete=models.SET_NULL,blank=True,null=True)
-    City= models.ForeignKey(city, on_delete=models.SET_NULL,blank=True,null=True)
-    Street_address = models.CharField(max_length=255)
-    zip_code = models.CharField(max_length=17)
+    first_name = models.CharField(max_length=255,blank=True,null=True)
+    last_name = models.CharField(max_length=255,blank=True,null=True)
+    phoneNumberRegex = RegexValidator(regex = r"^\d{8,11}$")
+    phoneNumber = models.CharField(validators = [phoneNumberRegex], max_length = 11, unique = True,blank=True,null=True)
+    Region = models.CharField(max_length=255,blank=True,null=True,choices=address_state)
+    City= models.CharField(max_length=255,blank=True,null=True)
+    Delivery_address = models.CharField(max_length=255,blank=True,null=True)
+    Additional_information = models.CharField(max_length=255,blank=True,null=True)
+    zip_code = models.CharField(max_length=17,blank=True,null=True)
     default_address = models.BooleanField(default=True,null=True,blank=True)
 
     def __str__(self):
-        return self.Street_address
+        return self.Delivery_address
+    
+    class Meta:
+        ordering =['Delivery_address']
     
 

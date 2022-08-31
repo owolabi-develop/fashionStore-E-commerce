@@ -46,18 +46,20 @@
 
 <div class="search-product-data">
     <div class="search-p-d-menuwrapper">
-    <div class="brands"><p>Category:{{category1.name}}</p></div>
+    <div class="brands"><p>FashionStore online Shopping</p></div>
+
+    <div class="sort-s"><button>Sort by:</button></div>
     </div>
-    {% if category %}
-    <div class="total-found"><p>{{category|length}} products Found</p></div>
+    {% if result.all.count %}
+    <div class="total-found"><p>{{result.all.count}} products Found</p></div>
     {% else %}
     <div class="total-found"><p> 0 products Found</p></div>
     {% endif %}
 
     <div class="search-product-holder">
 
-        {% if category %}
-    {% for products in category  %}
+        {% if result %}
+    {% for products in result  %}
    <a href="{% url 'fashionStore:details' products.id %}" style="text-decoration:none;color:tomato;"> <div class="Productholder">
         <img src="{{products.image.url}}">
         <p style="font-weight:bold;">{{products.name}}</p>
@@ -79,25 +81,18 @@
     </a>
     </div>
     {% endfor %}
-    {% endif %}
-    </div>
-</div>
-{% endblock ProductContainer %}
 
-<div class="paginationholder">
-    {% block paginationholder %}
-        <div class="pagination">
-            {% if category.has_previous  %}
-            <a href="?page={{ category.previous_page_number}}">&nbsp;&laquo;</a>
-            {% endif %}
-            {% for range in category.paginator.page_range %}
-            <a href="?page={{range}}">{{range}}</a>
-            {% endfor %}
-            
-            {% if product.has_next  %}
-            <a href="?page={{  category.next_page_number}}">&nbsp;&raquo;</a>
-            <a href="?page={{  category.paginator.num_pages }}">last&nbsp; &raquo;</a>
-            {% endif %}
-      </div>
-      {% endblock paginationholder %}
+
+    {% endif %}
+
+
+    </div>
+    
+
+
+
+
+
 </div>
+
+{% endblock ProductContainer %}

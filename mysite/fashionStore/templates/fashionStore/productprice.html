@@ -25,7 +25,7 @@
         <form action="{% url 'fashionStore:product-price' %}" method="get">
            {% csrf_token %}
            
-           <input type="number" name="low" id="low">- <input type="number" name="hi" id="high">
+          <input type="number" name="low" id="low">- <input type="number" name="hi" id="high">
           <br> 
           <input type="submit" value="Apply">
         </form>
@@ -46,18 +46,20 @@
 
 <div class="search-product-data">
     <div class="search-p-d-menuwrapper">
-    <div class="brands"><p>Category:{{category1.name}}</p></div>
+    <div class="brands"><p>Price:{{category1.name}}</p></div>
+
+    
     </div>
-    {% if category %}
-    <div class="total-found"><p>{{category|length}} products Found</p></div>
+    {% if price %}
+    <div class="total-found"><p>{{price|length}} products Found</p></div>
     {% else %}
     <div class="total-found"><p> 0 products Found</p></div>
     {% endif %}
 
     <div class="search-product-holder">
 
-        {% if category %}
-    {% for products in category  %}
+        {% if price %}
+    {% for products in price  %}
    <a href="{% url 'fashionStore:details' products.id %}" style="text-decoration:none;color:tomato;"> <div class="Productholder">
         <img src="{{products.image.url}}">
         <p style="font-weight:bold;">{{products.name}}</p>

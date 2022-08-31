@@ -2,6 +2,7 @@
 from django.utils import timezone
 from datetime import datetime
 from django.core import serializers
+from fashionStore.models import AddressBook
 from django.db.models.query_utils import Q
 from django.core.paginator import Paginator
 from django.contrib.auth import update_session_auth_hash
@@ -24,24 +25,53 @@ from django.contrib.auth import get_user_model
 from django.core.mail import EmailMessage,send_mail,EmailMultiAlternatives
 from . tokens import account_activation_token
 from django.urls import reverse, reverse_lazy
-from . models import Profile,OrderItem,order,State,city,AddressBook,WhishList,Product
+from . models import Profile,OrderItem,order,WhishList,Product,Customer
 from django.contrib.auth.views import PasswordResetConfirmView,PasswordResetCompleteView
-from .forms import UserCreationForm,UserChangePassword,UserSetPassword,UserPasswordResetForm,User,UserEditForm,ProfileForm
+from .forms import AddressBookForm, UserCreationForm,UserChangePassword,UserSetPassword,UserPasswordResetForm,User,UserEditForm,ProfileForm
+from . models import *
+cat1 = Category
+cat = Category.objects.all()
+cat2 = Category.objects.all()[:7]
+customer_add = AddressBook
 
 def index(request):
   products = Product.objects.all()
-  customer = request.user.customer
-  orders,create = order.objects.get_or_create(customer=customer,placed=False)
-  print(orders.cart_total)
-  return render(request,'FashionStore/index.html',{'product':products,'orders':orders})
+  cats = cat
+  paginator = Paginator(products,22)
+  page_number = request.GET.get('page')
+  allproducts = paginator.get_page(page_number)
 
-def details(request,product_id=1):
-  return render(request,'FashionStore/details.html',{})
+  if request.user.is_authenticated:
+     customer = request.user.customer
+     orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  else:
+    orders = {}
+  
+  return render(request,'FashionStore/index.html',{'product':allproducts,'orders':orders,'cats':cats,'cat2':cat2})
+
+def details(request,product_id):
+  product = get_object_or_404(Product,pk=product_id)
+  related_p = Product.objects.order_by('image').reverse()[:5]
+
+  return render(request,'FashionStore/details.html',{'product':product,'related_p':related_p,'cat2':cat2})
 
 
 def Category(request,category_name):
-  category = get_object_or_404(Category,name=category_name)
-  return render(request,'FashionStore/category.html',{'category':category})
+
+  if request.user.is_authenticated:
+     customer = request.user.customer
+     orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  else:
+    orders = {}
+  category = get_object_or_404(cat1,name=category_name)
+  cats = cat
+  product_size = ProductSize.objects.all()
+  brands = ProductBrand.objects.all()
+  categorylistpagination = Product.objects.filter(category__name=category)
+  paginator = Paginator(categorylistpagination,15)
+  page_number = request.GET.get('page')
+  categorylist = paginator.get_page(page_number)
+  return render(request,'FashionStore/category.html',{'size':product_size,'brand':brands,'category':categorylist,'cats':cat,'orders':orders,'cat2':cat2,'category1':category})
 
 def post_save_Profile(sender,instance,created,**kwargs):
     if created:
@@ -139,6 +169,8 @@ def Signup_success(request):
 
 @login_required(login_url='/Userlogin/')
 def UserProfile(request):
+    customer = request.user.customer
+    orders,create = order.objects.get_or_create(customer=customer,placed=False)
     if request.method =="POST":
         form = ProfileForm(request.POST,request.FILES,instance=request.user.profile)
         if form.is_valid():
@@ -146,32 +178,53 @@ def UserProfile(request):
     else:
         form = ProfileForm()
 
-    return render(request,"fashionStore/profile.html",{'form':form})
+    return render(request,"fashionStore/profile.html",{'form':form,"orders":orders})
 
 @login_required(login_url='/Userlogin/')
 def Wishlist(request):
   customer = request.user.customer
   saveItem = customer.whishlist_set.all()
-  return render(request,'fashionStore/whishlist.html',{'saveItem':saveItem})
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,'fashionStore/whishlist.html',{'saveItem':saveItem,"orders":orders})
 
+@login_required(login_url='/Userlogin/')
 def add_Wishlist(request,product_id):
   product = get_object_or_404(Product,pk=product_id)
   customer = request.user.customer
   item,created = WhishList.objects.get_or_create(product=product,customer=customer)
   if created:
     messages.success(request,"Product add to Wishlist")
+  else:
+     messages.success(request,"Product Already in Wishlist")
+
   return HttpResponseRedirect(reverse("fashionStore:index"))
 
 @login_required(login_url='/Userlogin/')
+def remove_Wishlist(request,product_id):
+  product = get_object_or_404(Product,pk=product_id)
+  customer = request.user.customer
+  item,created = WhishList.objects.get_or_create(product=product,customer=customer)
+  deleteWishlist = item.delete()
+  if deleteWishlist:
+    messages.success(request,"Product remove from wishlist")
+  return HttpResponseRedirect(reverse("fashionStore:Wishlist"))
+
+@login_required(login_url='/Userlogin/')
 def UserOrder(request):
-  return render(request,'fashionStore/order.html')
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,'fashionStore/order.html',{'orders':orders})
 
 def RecentlyView(request):
-  return render(request,'fashionStore/RecentlyView.html')
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,'fashionStore/RecentlyView.html',{'orders':orders})
 
 
 @login_required(login_url='/Userlogin/')
 def userDetails(request):
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
   if request.method == "POST":
     userEditform = UserEditForm(request.POST,instance=request.user)
     if userEditform.is_valid():
@@ -179,10 +232,12 @@ def userDetails(request):
         messages.success(request,'User info Update Successful')
   else:
       userEditform = UserEditForm(instance=request.user)
-  return render(request,'fashionStore/customer-account-edit.html',{'userEditform':userEditform})
+  return render(request,'fashionStore/customer-account-edit.html',{'userEditform':userEditform,"orders":orders})
 
 @login_required(login_url='/Userlogin/')
 def changePassword(request):
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
   if request.method == "POST":
     PasswordChangeform = UserChangePassword(user=request.user, data=request.POST)
     if PasswordChangeform.is_valid():
@@ -191,7 +246,7 @@ def changePassword(request):
         messages.success(request,'Password Update Successful')
   else:
       PasswordChangeform = UserChangePassword(user=request.user)
-  return render(request,'fashionStore/changepass.html',{'PasswordChangeform':PasswordChangeform})
+  return render(request,'fashionStore/changepass.html',{'PasswordChangeform':PasswordChangeform,"orders":orders})
 
 @login_required(login_url='/Userlogin/')
 def CloseAccount(request):
@@ -199,28 +254,53 @@ def CloseAccount(request):
 
 @login_required(login_url='/Userlogin/')
 def AddressBook(request):
-  return render(request,'fashionStore/AddressBook.html')
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,'fashionStore/AddressBook.html',{'orders':orders})
 
 @login_required(login_url='/Userlogin/')
 def AddressBook_create(request):
-  return render(request,'fashionStore/AddressBook.html')
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  if request.method =="POST":
+    form = AddressBookForm(request.POST)
+    if form.is_valid():
+      instance = form.save(commit=False)
+      instance.customer = customer
+      instance.order=orders
+      instance.save()
+      messages.success(request,'Address created')
+    return HttpResponseRedirect(reverse("fashionStore:Create-Address-book"))
+  else:
+    form = AddressBookForm(initial={'first_name':customer.User.first_name,'last_name':customer.User.last_name,'phoneNumber':customer.User.phoneNumber})
+
+  return render(request,'fashionStore/AddressBook_create.html',{'orders':orders,'form':form})
 
 @login_required(login_url='/Userlogin/')
 def AddressBook_Edit(request):
-  return render(request,'fashionStore/AddressBook.html')
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,'fashionStore/AddressBook.html',{'orders':orders})
 
 @login_required(login_url='/Userlogin/')
 def NewsSeletter(request):
-  return render(request,'fashionStore/NewsSeletter.html')
+  customer = request.user.customer
+  orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,'fashionStore/NewsSeletter.html',{'orders':orders})
 
 
 def ShopingCart(request):
-  customer = request.user.customer
-  orders,create = order.objects.get_or_create(customer=customer,placed=False)
-  item = orders.orderitem_set.all()
-  print(orders.cart_total)
+  if not request.user.is_authenticated:
+    customer = None
+    orders = None
+    item = None
+  else:
+    customer = request.user.customer
+    orders,create = order.objects.get_or_create(customer=customer,placed=False)
+    item = orders.orderitem_set.all()
   return render(request,'fashionStore/shopingCart.html',{'item':item,'orders':orders})
 
+@login_required(login_url='/Userlogin/')
 def addtocart(request,product_id):
   product =get_object_or_404(Product,pk=product_id)
   customer = request.user.customer
@@ -230,6 +310,47 @@ def addtocart(request,product_id):
     messages.success(request,'product was add to card')
   return HttpResponseRedirect(reverse('fashionStore:index'))
 
+def delete_cart_pro(request,product_id):
+  product = get_object_or_404(Product,pk=product_id)
+  customer = request.user.customer
+  orders,created = order.objects.get_or_create(customer=customer,placed=False)
+  item= OrderItem.objects.filter(product=product,order=orders)
+  delete_product = item.delete()
+  if delete_product:
+    messages.success(request,'Product was remove cart')
+  return HttpResponseRedirect(reverse("fashionStore:Shoping-cart"))
+
+def plusQuantity(request,product_id):
+  product = get_object_or_404(Product,pk=product_id)
+  customer = request.user.customer
+  orders,created = order.objects.get_or_create(customer=customer,placed=False)
+  plusQ = orders.orderitem_set.get(product=product)
+  plusQ.quantity +=1
+  plusQ.save()
+  if plusQ:
+    messages.success(request,'Product added to cart')
+  return HttpResponseRedirect(reverse("fashionStore:Shoping-cart"))
+
+def minusQuantity(request,product_id):
+  product = get_object_or_404(Product,pk=product_id)
+  customer = request.user.customer
+  orders,created = order.objects.get_or_create(customer=customer,placed=False)
+  plusQ = orders.orderitem_set.get(product=product)
+  plusQ.quantity-=1
+  plusQ.save()
+  if plusQ:
+    messages.success(request,'Product remove from cart')
+  return HttpResponseRedirect(reverse("fashionStore:Shoping-cart"))
+
+def EmptyCart(request):
+  customer = request.user.customer
+  orders,created = order.objects.get_or_create(customer=customer,placed=False)
+  item= OrderItem.objects.filter(order=orders)
+  empty_cart = item.delete()
+  if empty_cart:
+    messages.success(request,'All item in cart has been remove cart empty...')
+  return HttpResponseRedirect(reverse("fashionStore:Shoping-cart"))
+
 @login_required(login_url='/Userlogin/')
 def Checkoutpage(request):
   return render(request,'fashionStore/shopingCart.html')
@@ -237,3 +358,72 @@ def Checkoutpage(request):
 @login_required(login_url='/Userlogin/')
 def order_details(request):
   return render(request,'fashionStore/order-details.html')
+
+def searchPage(request):
+  query = request.GET.get('query')
+  product_size = ProductSize.objects.all()
+  product_brand = ProductBrand.objects.all()
+  if query:
+    
+    result = Product.objects.filter(Q(name__icontains=query)|Q(category__name__icontains=query)|Q(brand__brand__icontains=query))
+    total_product = result.count()
+  else:
+    result = "No products Found"
+  cats = cat
+  if not request.user.is_authenticated:
+    customer = None
+    orders = None
+    item = None
+  else:
+    customer = request.user.customer
+    orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,'fashionStore/search_result.html',{"cats":cats,"cat2":cat2,'result':result,'size':product_size,'brand':product_brand,'orders':orders})
+
+
+def productbrands(request,brand_brand):
+  product_brand = get_object_or_404(ProductBrand,brand=brand_brand)
+  product_size = ProductSize.objects.all()
+  brands = ProductBrand.objects.all()
+  cats = cat
+  if not request.user.is_authenticated:
+    customer = None
+    orders = None
+    item = None
+  else:
+    customer = request.user.customer
+    orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,"fashionStore/productbrands.html",{'brand':brands,"product_brand":product_brand,'size':product_size,'orders':orders,"cats":cats,"cat2":cat2,})
+
+def productSize(request,size_size):
+  product_size = get_object_or_404(ProductSize,size=size_size)
+  Sizes = ProductSize.objects.all()
+  brands = ProductBrand.objects.all()
+  cats = cat
+  if not request.user.is_authenticated:
+    customer = None
+    orders = None
+    item = None
+  else:
+    customer = request.user.customer
+    orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,"fashionStore/productSizes.html",{'size':Sizes,'brand':brands,"product_size":product_size,'orders':orders,"cats":cats,"cat2":cat2})
+
+def productprice(request):
+  hi = request.GET.get('hi')
+  low = request.GET.get('low')
+  if low and hi:
+    price = Product.objects.filter(Q(price__range=(low,hi)))
+  else:
+     price = Product.objects.filter(Q(price__range=(low,hi)))
+     print(price)
+  Sizes = ProductSize.objects.all()
+  brands = ProductBrand.objects.all()
+  cats = cat
+  if not request.user.is_authenticated:
+    customer = None
+    orders = None
+    item = None
+  else:
+    customer = request.user.customer
+    orders,create = order.objects.get_or_create(customer=customer,placed=False)
+  return render(request,"fashionStore/productprice.html",{'size':Sizes,'brand':brands,'orders':orders,"cats":cats,"cat2":cat2,'price':price})

@@ -16,7 +16,7 @@
     <!---header menu-->
 <div class="headerMenu">
     <div class="logo"><a href="{% url 'fashionStore:index' %}">FashionStore</a></div>
-    <div class="searchbar"><form> <input type="search" name="query" id="query" placeholder="Search for product brand and category"></form></div>
+    <div class="searchbar"><form action="{% url 'fashionStore:search-page' %}" method="get"> <input type="search" name="query" id="query" placeholder="Search for product brand and category"> <input type="submit" value="Search"></form></div>
     <div class="Account">
         
         <button class="btn Accountbtn"><i class="fa-solid fa-user-plus"></i> &nbsp;Account</button>
@@ -38,7 +38,11 @@
     </div>
     <div class="shopcart">
         {% block shopcart %}
+        {% if request.user.is_authenticated %}
     <a href="{% url 'fashionStore:Shoping-cart' %}" style="text-decoration:none;"><i class="fa-solid fa-cart-shopping"></i> <span>{{orders.cart_item}}</span><a/>
+        {% else %}
+        <a href="{% url 'fashionStore:Shoping-cart' %}" style="text-decoration:none;"><i class="fa-solid fa-cart-shopping"></i> <span>0</span><a/>
+        {% endif %}
         {% endblock shopcart %}
 </div>
 </div>
@@ -51,12 +55,14 @@
         <div></div>
     </div>
     <div class="category-menu">
-    <a href="http://">Computers and Accessories</a>
-    <a href="http://">Phone And Tablets</a>
-    <a href="http://">Home and Kitchen</a>
-    <a href="http://">Electronics</a>
-    <a href="http://">Cars and Trucks</a>
+        {% block category-menu %}
+        {% if cat2 %}
+        {% for cats in cat2  %}
+        <a href="{% url 'fashionStore:Category' cats.name %}">{{cats.name|title}}</a>
+        {% endfor %}
+        {% endif %}
     <a href="http://">Contact us</a>
+    {% endblock category-menu %}
     </div>
 </div>
 {% if messages %}
@@ -69,19 +75,12 @@
 {% endif %}
 <!--menu link-->
 <div class="navbarMenu">
-    <div class="Acct">
-        <p><img src=" {% static 'images/default.png' %}" alt=""><p>Account</p></p>
-</div>
-    <a href="http://">Signup / Login</a>
-    <a href="http://">Home & Office</a>
-    <a href="http://">Electronics</a>
-    <a href="http://">Cars and Trucks</a>
-    <a href="http://">Cloths</a>
-    <a href="http://">Shoes</a>
-    <a href="http://">Health & Beauty</a>
-    <a href="http://">Phone and Tablet</a>
-    <a href="http://">baby Product</a>
-    <a href="http://">Gameing</a> 
+    <a href="{% url 'fashionStore:signup' %}">Signup / Login</a>
+    {% if cats %}
+        {% for cats in cats  %}
+        <a href="{% url 'fashionStore:Category' cats.name %}">{{cats.name|title}}</a>
+        {% endfor %}
+        {% endif %}
     {% if request.user.is_authenticated  %}
     <a href="{% url 'fashionStore:logout' %}">Logout</a> 
     {% endif %}
@@ -91,15 +90,13 @@
 <div class="contentWrapper">
     {% block contentWrapper %}
     <div class="CategoryHolder">
-        <a href="http://">Home & Office</a>
-        <a href="http://">Electronics</a>
-        <a href="http://">Cars and Trucks</a>
-        <a href="http://">Cloths</a>
-        <a href="http://">Shoes</a>
-        <a href="http://">Health & Beauty</a>
-        <a href="http://">Phone and Tablet</a>
-        <a href="http://">baby Product</a>
-        <a href="http://">Gameing</a>  
+        {% block CategoryHolder %}
+        {% if cats %}
+        {% for cats in cats  %}
+        <a href="{% url 'fashionStore:Category' cats.name %}">{{cats.name|title}}</a>
+        {% endfor %}
+        {% endif %}
+        {% endblock CategoryHolder %}
     </div>
     <!--s-->
     <div class="slideContent">
@@ -143,30 +140,13 @@
     {% endblock contentWrapper %}
 </div>
 <!--content-category-slider-wrapper-->
-{% block sortMenu %}
-<div class="sortMenu">
-   
-    <div class="allproduct">
-        <span>Top Products</span>
-    </div>
-    <div class="sort">
-        <form>
-            <Label for="sortp">Sort by:</Label>
-            <select name="sortp" id="sortp">
-                <option value="Popularity">Popularity</option>
-                <option value="Latest">latest</option>
-                <option value="Latest">High to low</option>
-            </select>
-        </form>
-    </div>
-</div>
-{% endblock sortMenu %}
+
 <!--ProductContainer-->
 <div class="ProductContainer">
     {% block ProductContainer %}
     {% if product %}
     {% for products in product  %}
-    <div class="Productholder">
+   <a href="{% url 'fashionStore:details' products.id %}" style="text-decoration:none;color:tomato;"> <div class="Productholder">
         <img src="{{products.image.url}}">
         <p style="font-weight:bold;">{{products.name}}</p>
         <p>&#8358;{{products.price}}</p>
@@ -184,6 +164,7 @@
                 <input type="submit" value="Add To Cart">
             </form>
         </div>
+    </a>
     </div>
     {% endfor %}
     {% else %}
@@ -196,14 +177,17 @@
 <div class="paginationholder">
     {% block paginationholder %}
         <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
+            {% if product.has_previous  %}
+            <a href="?page={{ product.previous_page_number}}">&nbsp;&laquo;</a>
+            {% endif %}
+            {% for range in product.paginator.page_range %}
+            <a href="?page={{range}}">{{range}}</a>
+            {% endfor %}
+            
+            {% if product.has_next  %}
+            <a href="?page={{ product.next_page_number}}">&nbsp;&raquo;</a>
+            <a href="?page={{ product.paginator.num_pages }}">last&nbsp; &raquo;</a>
+            {% endif %}
       </div>
       {% endblock paginationholder %}
 </div>

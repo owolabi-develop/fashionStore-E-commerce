@@ -6,7 +6,13 @@ function showNav(){
     else{
         navMenu.style.left="-200px";
     }
+
 }
+
+
+
+
+
 
 var slideIndex = 1;
 showSlides(slideIndex);
@@ -37,5 +43,6 @@ function showSlides(n) {
 }
 
 function PasswordM(){
-  document.querySelector('.password-messages').style.display='none';
+  var pwsd = document.querySelector('.password-messages').style.display='none'; 
 }
+setTimeout(PasswordM,1000)

@@ -1,6 +1,6 @@
 
 from django import forms
-from . models import User,Profile
+from . models import User,Profile, AddressBook
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import PasswordResetForm,SetPasswordForm,PasswordChangeForm
@@ -86,6 +86,21 @@ class UserChangePassword(PasswordChangeForm):
     class Meta:
         model = User
         fields = "__all__"
+
+class AddressBookForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        for field_name in self.fields:
+            field = self.fields.get(field_name)
+            self.fields[field_name].widget.attrs.update({'placeholder':field.label})
+    
+    class Meta:
+        model = AddressBook
+        fields = ("first_name","last_name","phoneNumber","Region","City","Delivery_address","zip_code","Additional_information","default_address",)
+        widgets ={
+            'default_address':forms.CheckboxInput,
+        }
+
 
 
 

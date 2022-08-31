@@ -1,0 +1,94 @@
+{% extends 'fashionStore/index.html' %}
+{% load static %}
+{% block contentWrapper %}{% endblock contentWrapper %}
+{% block sortMenu %}{% endblock sortMenu %}
+
+{% block ProductContainer %}
+
+<div class="profile-menu">
+    {% block profile-menu %}
+    <a href="{% url 'fashionStore:Profile'%}"><i class="fa-solid fa-user"></i> &nbsp; My Fashion Account</a>
+    <div class="userItem">
+    <a href="{% url 'fashionStore:order'%}"> orders</a>
+    <a href="{% url 'fashionStore:Wishlist' %}">Saved items</a>
+    <a href="{% url 'fashionStore:RecentlyView' %}"> Recently Viewed</a>
+    <a href="#">Pending Reviewed</a>
+</div>
+  <div class="userdetails">
+    <a href="{% url 'fashionStore:customer-details' %}">Details</a>
+    <a href="{% url 'fashionStore:Address-book' %}">Address Book</a>
+    <a href="{% url 'fashionStore:changePassword' %}">Change Password</a>
+    <a href="{% url 'fashionStore:new-seletter' %}">Newseletter Preference</a>
+    <a href="{% url 'fashionStore:close-account' %}">Close Account</a>
+
+  </div>
+  <a href="{% url 'fashionStore:Login' %}">Logout</a>
+  {% endblock profile-menu %}
+</div>
+<div class="profile-content">
+    {% block profile-content %}
+    <div class="profile-content-title">{% block profile-content-title %} Add Address{% endblock profile-content-title %}</div>
+     <div class="address-form-container">
+       
+        <form action="{% url 'fashionStore:Create-Address-book' %}" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+             <!--fieldWrapper-container-->
+           <div class="fieldWrapper-container">
+            <div class="fieldWrapper">
+                {{ form.first_name }}
+                 {{ form.first_name.errors }}
+            </div>
+
+            <div class="fieldWrapper">
+                {{ form.last_name }}
+                {{ form.lastname.errors }}
+                 
+            </div>
+
+            <div class="fieldWrapper">
+                {{ form.phoneNumber }}
+                {{ form.phoneNumber.errors }}
+                 
+            </div>
+
+            <div class="fieldWrapper">
+                {{ form.Delivery_address }}
+                {{ form.Delivery_address.errors }} 
+            </div>
+
+            <div class="fieldWrapper">
+                {{ form.Region }}
+                {{ form.Region.errors }} 
+            </div>
+
+            <div class="fieldWrapper">
+                {{ form.City }}
+                {{ form.City.errors }} 
+            </div>
+
+            <div class="fieldWrapper">
+                {{ form.Additional_information }}
+                {{ form.Additional_information.errors }} 
+            </div>
+
+            <div class="fieldWrapper">
+                {{ form.zip_code }}
+                {{ form.zip_code.errors }} 
+            </div>
+        </div>
+        <!--fieldWrapper-container-->
+        <div class="fieldWrapper">
+            {{ form.default_address }}
+            {{ form.default_address.errors }} 
+        </div>
+            <input type="submit" value="Create Address">
+        </form>
+     </div>
+
+
+    {% endblock profile-content %}
+</div>
+{% endblock ProductContainer %}
+
+{% block paginationholder %}{% endblock paginationholder %}
