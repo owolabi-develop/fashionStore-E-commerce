@@ -26,10 +26,10 @@
 </div>
 <div class="profile-content">
     {% block profile-content %}
-    <div class="profile-content-title">{% block profile-content-title %} Add Address{% endblock profile-content-title %}</div>
+    <div class="profile-content-title">{% block profile-content-title %} Update Address{% endblock profile-content-title %}</div>
      <div class="address-form-container">
        
-        <form action="{% url 'fashionStore:Create-Address-book' %}" method="post">
+        <form action="{% url 'fashionStore:Edit-address-book' customer_address.id%}" method="post">
             {% csrf_token %}
             {{ form.non_field_errors }}
              <!--fieldWrapper-container-->
@@ -79,10 +79,9 @@
         <!--fieldWrapper-container-->
         <div class="fieldWrapper">
             {{ form.default_address }}
-            {{ form.default_address.id_for_label }}
             {{ form.default_address.errors }} 
         </div>
-            <input type="submit" value="Create Address">
+            <input type="submit" value="Update Address">
         </form>
      </div>
 

@@ -60,7 +60,7 @@
     <p style="padding:0px 10px; font-weight:bold; font-size: 12px;">Subtotal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{orders.cart_total}} </p>
 
     <div class="cart-summary-button">
-        <button class="cart-btn-checkout"><a href="" style="text-decoration: none; color:aliceblue">Checkout (&#8358;{{orders.cart_total}})</a></button>
+        <button class="cart-btn-checkout"><a href="{% url 'fashionStore:Checkout-page' %}" style="text-decoration: none; color:aliceblue">Checkout (&#8358;{{orders.cart_total}})</a></button>
     </div>
 </div>
 

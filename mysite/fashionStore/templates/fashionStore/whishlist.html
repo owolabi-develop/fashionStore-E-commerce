@@ -12,19 +12,16 @@
                 <th>Product Name</th>
                 <th>Unity Price</th>
                 <th>Stock Status</th>
-                <th></th>
             </thead>
         </tr>
         {% if saveItem %}
         {% for saveItems in saveItem %}
         <tr>
             <td><a href="{% url 'fashionStore:remove-Wishlist' saveItems.product.id %}"><i class="fa-regular fa-trash-can"></i></a></td>
-            <td><img src="{{saveItems.product.image.url}}" alt="" srcset=""></td>
+            <td><a href="{% url 'fashionStore:details' saveItems.product.id %}"><img src="{{saveItems.product.image.url}}" alt="" srcset=""></a></td>
             <td>{{saveItems.product.name}}</td>
             <td>{{saveItems.product.price}}</td>
             <td>In Stock</td>
-    
-            <td><form action="{% url 'fashionStore:add-to-cart' saveItems.product.id %}" method="post"><input type="submit" value="Add To Cart">{% csrf_token %}</form></td>
         </tr>
         {% endfor %}
         {% else %}

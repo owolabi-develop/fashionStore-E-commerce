@@ -1,5 +1,7 @@
 from django.urls import path,include,re_path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 app_name ='fashionStore'
 
 urlpatterns = [
@@ -21,25 +23,28 @@ urlpatterns = [
     path("ProductSizes/<size_size>/",views.productSize,name='product-size'),
     path("ProductPrice/",views.productprice,name='product-price'),
     path("Customer/add-to-Wishlist/<int:product_id>",views.add_Wishlist,name='add-Wishlist'),
-     path("Customer/Remove-from-Wishlist/<int:product_id>",views.remove_Wishlist,name='remove-Wishlist'),
+    path("Customer/Remove-from-Wishlist/<int:product_id>",views.remove_Wishlist,name='remove-Wishlist'),
     path("Customer/Order/",views.UserOrder,name='order'),
     path("Customer/RecentlyViewed/",views.RecentlyView,name='RecentlyView'),
     path("Customer/addtocart/<int:product_id>/",views.addtocart,name='add-to-cart'),
     path("Customer/account/edit",views.userDetails,name='customer-details'),
     path("Customer/Change-Password/",views.changePassword,name='changePassword'),
-    path("Customer/Address-Book/",views.AddressBook,name='Address-book'),
     path("Customer/Create-Address-Book/",views.AddressBook_create,name='Create-Address-book'),
+    path("Customer/Create-Address-Book-Edit/<int:address_id>/",views.AddressBook_Edit,name='Edit-address-book'),
+    path("Customer/Address/",views.userAddressBook,name="user-Address-Book"),
     path("Customer/Close-Account/",views.CloseAccount,name='close-account'),
     path("Customer/NewSeltter/",views.AddressBook,name='new-seletter'),
+    path("Payment-verify/",views.verify_transaction,name='Payment-verify'),
     path("Customer/Cart/",views.ShopingCart,name='Shoping-cart'),
     path("Customer/EmptyCart/",views.EmptyCart,name='empty-cart'),
+    path("Customer/Payment-Method/",views.Payment_method,name='payment-method'),
+    path("Customer/Transaction-Update/<int:order_id>",views.transaction_update,name='transaction_update'),
     path("Customer/Delete/Product/<int:product_id>/",views.delete_cart_pro,name='delete-product'),
-    path("Customer/Checkout/",views.Checkoutpage,name=' Checkout-page'),
+    path("Customer/Checkout/",views.Checkoutpage,name='Checkout-page'),
     path("Customer/PluQ/<int:product_id>/",views.plusQuantity,name='plusQuantity'),
     path("Customer/minusQ/<int:product_id>/",views.minusQuantity,name='minus-Quantity'),
-
     path("Customer/orders/details",views.order_details,name='order_details'),
     path("Logout/",views.User_logOut,name='logout'),
     path("PasswordRestDown/",views.password_down,name='password-down'),
     path('passwordchangcomplete/',views.password_reset_complete,name='password_reset_complete'),    
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

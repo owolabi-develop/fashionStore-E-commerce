@@ -16,7 +16,7 @@
     <!---header menu-->
 <div class="headerMenu">
     <div class="logo"><a href="{% url 'fashionStore:index' %}">FashionStore</a></div>
-    <div class="searchbar"><form action="{% url 'fashionStore:search-page' %}" method="get"> <input type="search" name="query" id="query" placeholder="Search for product brand and category"> <input type="submit" value="Search"></form></div>
+    <div class="searchbar"><form action="{% url 'fashionStore:search-page' %}" method="get"> <input type="search" name="query" id="query" placeholder="Search for product brand and category" required> <input type="submit" value="Search"></form></div>
     <div class="Account">
         
         <button class="btn Accountbtn"><i class="fa-solid fa-user-plus"></i> &nbsp;Account</button>
@@ -148,7 +148,7 @@
     {% for products in product  %}
    <a href="{% url 'fashionStore:details' products.id %}" style="text-decoration:none;color:tomato;"> <div class="Productholder">
         <img src="{{products.image.url}}">
-        <p style="font-weight:bold;">{{products.name}}</p>
+        <p style="font-weight:bold;">{{products.name|truncatewords:"5"}}</p>
         <p>&#8358;{{products.price}}</p>
         <p>
         <span class="fa fa-star checked"></span>
@@ -157,12 +157,18 @@
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         </p>
+        
         <div class="cartbtn">
+            {% if products in current_order %}
+       <a href="{% url 'fashionStore:add-Wishlist' products.id %}" style="font-size:20px; float:right; text-decoration:none; padding-top:5px;"><i class="fa-regular fa-heart" style="font-size:20px;"></i> &nbsp;</a>
+       <a href="{% url 'fashionStore:Shoping-cart' %}"><input type="submit" value="In Cart"></a>
+        {% else %}
             <a href="{% url 'fashionStore:add-Wishlist' products.id %}" style="font-size:20px; float:right; text-decoration:none; padding-top:5px;"><i class="fa-regular fa-heart" style="font-size:20px;"></i> &nbsp;</a>
             <form action="{% url 'fashionStore:add-to-cart' products.id %}" method="post">
                 {% csrf_token %}
                 <input type="submit" value="Add To Cart">
             </form>
+            {% endif %}
         </div>
     </a>
     </div>

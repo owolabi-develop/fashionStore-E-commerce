@@ -1,19 +1,36 @@
 {% extends 'fashionStore/profile.html' %}
 {% load static %}
 {% block profile-content %}
+
+
 <div class="profile-content-title">{% block profile-content-title %} Your Order{% endblock profile-content-title %}</div>
 
+{% if ordersID %}
+    {% for orderID in ordersID %}
+    <p style="padding-left: 20px; font-weight: bold;"> Order ID :{{orderID}}</p>
+    {% endfor %}
+    {% endif %}
+    <p style="padding-left: 20px;"> DateOrdered: {{orders.order_date}} </p>
+{% if user_orders %}
+    {% for user_orders  in user_orders %}
+    
 <div class="orders-items">
     <div class="orders-products">
         <div class="order-product-details">
-            <p>black tisrte</p>
-            <p>Qty: 2</p>
-            <p>2000</p>
+            <p>{{user_orders.name}}</p>
+            <p>{{user_orders.desc}}</p>
+            <p>&#8358;{{user_orders.price}}</p>
         </div>
-<img src="{% static 'images/bags1.jpg' %}" alt="" srcset="">
+<img src="{{user_orders.image.url}}" alt="" srcset="">
     </div>
-<div class="orders-buttons">
-   <a href="{% url 'fashionStore:order_details' %}"> <button class="orders-details">See Details</button></a>
-</div>        
+ 
+
 </div>
+
+{% endfor %}
+{% else %}
+<p align="center">You have no active order yet</p>
+{% endif %}
+<br/>
+<br/>
 {% endblock profile-content %}

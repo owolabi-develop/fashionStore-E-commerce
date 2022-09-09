@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionStoreCheckout</title>
+    <link rel="stylesheet" href="{% static 'fashionStore/main.css' %}">
+    <script src="{% static 'fashionStore/main.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/18de66c05e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="checkout-wrapper">
+   
+    <div class="checkout-product">
+        <div class="checkout-title"><p>Order Summary</p></div>
+        <div class="checkout-product-holder">
+            <table>
+                {% if item %}
+                {% for products in item %}
+                <tr>
+                    <td><img src="{{products.product.image.url}}" alt="{{products.product.name}}"></td>
+                    <td>{{products.product.name}}</td>
+                    <td>&#8358;{{products.product.price}}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p>No Product </p>
+                {% endif %}
+            </table>
+        </div>
+    <div class="checkout-modified"><a href="{% url 'fashionStore:Shoping-cart' %}"><button>Modified Cart</button></a></div>
+    <div class="total-checkout-item">
+        <p>Items:{{orders.cart_item}}</p>
+        <p>Total:&#8358;{{orders.cart_total}}</p>
+    </div>
+    </div>
+
+
+
+    <div class="form-or-address pay-form">
+      
+        
+          <div class="product-amount">
+            <form id="paymentForm" action="{% url 'fashionStore:payment-method' %}" method="post">
+              {% csrf_token %}
+                <p>Enter your email to get your reciept</p>
+                  <input type="email" id="email-address" value="{{request.user.email}}" name="email" required  placeholder="Enter E-mail Address"/>
+
+                  <button type="submit" onclick="payWithPaystack()" value="100"> Pay &#8358;{{orders.cart_total}} </button>
+
+              </form>     
+              
+              <script src="https://js.paystack.co/v1/inline.js"></script>  
+<script>
+  
+</script>
+             
+      
+         
+         
+        </div>
+       
+      </div>
+
+</div>
+
+</body>
+</html>

@@ -14,12 +14,11 @@
     <div class="userItem">
     <a href="{% url 'fashionStore:order'%}"> orders</a>
     <a href="{% url 'fashionStore:Wishlist' %}">Saved items</a>
-    <a href="{% url 'fashionStore:RecentlyView' %}"> Recently Viewed</a>
     <a href="#">Pending Reviewed</a>
 </div>
   <div class="userdetails">
     <a href="{% url 'fashionStore:customer-details' %}">Details</a>
-    <a href="{% url 'fashionStore:Address-book' %}">Address Book</a>
+    <a href="{% url 'fashionStore:user-Address-Book' %}">Address Book</a>
     <a href="{% url 'fashionStore:changePassword' %}">Change Password</a>
     <a href="{% url 'fashionStore:new-seletter' %}">Newseletter Preference</a>
     <a href="{% url 'fashionStore:close-account' %}">Close Account</a>
@@ -43,12 +42,16 @@
         </div>
 
         <div class="profile-details-holder">
-            <div class="profile-details-header"><a href="{% url 'fashionStore:Address-book' %}"><i class="fa-solid fa-pen"></i></a><p>Address Book</p></div>
-            <p style="padding:5px;">Your default shipping address:</p>
-            <br/>
-           <br/>
-           <br/>
+            <div class="profile-details-header"><a href=""><i class="fa-solid fa-pen"></i></a><p>Address Book</p></div>
+            {% if customer_address %}
+        <p style="padding-left:5px;" >State:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{customer_address.Region}}</p>
+        <p style="padding-left:5px;">City:&nbsp;&nbsp;&nbsp;&nbsp;{{customer_address.City}}</p>
+        <p style="padding-left:5px;">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{customer_address.phoneNumber}}</p>
+        <p style="padding-left:5px;">Delivery Address:&nbsp;&nbsp;&nbsp;{{customer_address.Delivery_address|truncatewords:"4"}}</p>
+      
+        {% else %}
             <button class="btn"><a href="{% url 'fashionStore:Create-Address-book' %}">Add Default Address</a></button>
+            {% endif %}
          </div>
 
          <div class="profile-details-holder">

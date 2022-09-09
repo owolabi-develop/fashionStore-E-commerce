@@ -42,7 +42,4 @@ function showSlides(n) {
   setInterval(showSlides,3000)
 }
 
-function PasswordM(){
-  var pwsd = document.querySelector('.password-messages').style.display='none'; 
-}
-setTimeout(PasswordM,1000)
+

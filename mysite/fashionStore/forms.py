@@ -1,6 +1,6 @@
 
 from django import forms
-from . models import User,Profile, AddressBook
+from . models import User,Profile,AddressBook
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import PasswordResetForm,SetPasswordForm,PasswordChangeForm
@@ -19,7 +19,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name','last_name','email','phoneNumber','subscribe')
+        fields = ('first_name','last_name','email','phoneNumber')
         widgets ={
             'subscribe':forms.CheckboxInput,
         }
@@ -100,6 +100,8 @@ class AddressBookForm(forms.ModelForm):
         widgets ={
             'default_address':forms.CheckboxInput,
         }
+
+
 
 
 

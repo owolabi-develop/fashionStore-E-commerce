@@ -1417,11 +1417,241 @@ background-color: rgb(253, 130, 109);
     width:100%;
     flex-wrap:wrap;
     padding: 10px;
+  }
+
+.checkout-wrapper{
+    width:80%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+.checkout-wrapper > .form-or-address{
+    flex: 60%;
+    padding: 10px;
+    margin:10px;
+    height: 400px;
+    border-radius: 5px;
+    background-color: rgb(247, 243, 243);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.checkout-wrapper > .form-or-address >  .address-form-container{
+    overflow: hidden;
+    width:100%;
+    padding:10px;
+}
+
+.checkout-wrapper > .form-or-address >  .address-form-container > form > .fieldWrapper-container{
+    overflow: hidden;
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.checkout-wrapper > .form-or-address > .address-form-container > form .fieldWrapper-container > .fieldWrapper{
+   flex:40%;
+   margin: 5px;
+  
+}
+
+.checkout-wrapper > .form-or-address >  .address-form-container > form .fieldWrapper-container > .fieldWrapper input,select{
+    width:100%;
+    margin: 5px;
+    outline: none;
+    height: 50px;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    text-indent: 10px;
+ }
+
+ .checkout-wrapper > .form-or-address >  .address-form-container input[type=submit]{
+    width:100%;
+    border:none;
+    outline: none;
+    color:aliceblue;
+    height: 45px;
+    border-radius: 5px;
+   cursor: pointer;
+   background-color: tomato;
+   text-align: center;
+
+ }
+
+ .checkout-wrapper > .form-or-address >  .address-form-container input[type=checkbox]{
+    width:25px;
+    height: 25px;
+    border-radius: 5px;
+   cursor: pointer;
+   text-align: center;
+   background-color: tomato;
+   
+ }
+
+ .checkout-wrapper > .form-or-address >  .address-form-container >input:checked{
+    width:25px;
+    height: 25px;
+    border-radius: 5px;
+   cursor: pointer;
+   text-align: center;
+   background-color: tomato;
+ }
+
+.checkout-wrapper > .checkout-product{
+    flex: 35%;
+    padding: 5px;
+    margin:10px;
+    border-radius: 5px;
+    background-color: rgb(247, 243, 243);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.checkout-wrapper > .checkout-product > .checkout-title{
+    width: 100%;
+    padding: 2px;
+    font-weight: bolder;
+    font-style: oblique;
+    border-bottom: solid 1px lightgray;  
+}
+.checkout-wrapper > .checkout-product > .checkout-title{
+    width: 100%;
+    padding: 2px;
+    font-weight: bolder;
+    font-style: oblique;
+    border-bottom: solid 1px lightgray;  
+}
+
+.checkout-wrapper > .checkout-product > .checkout-product-holder > table{
+    width: 100%;
+    border-collapse: collapse;
+
+}
+.checkout-wrapper > .checkout-product > .checkout-product-holder > table td{
+    text-align: justify;
+    height: 30px;
+
+
+}
+.checkout-wrapper > .checkout-product > .checkout-product-holder > table tr{
+   border-bottom: 1px solid lightgray;
+
+}
+.checkout-wrapper > .checkout-product > .checkout-product-holder > table td > img{
+    height: 100px;
+    width: 100px;
+    border-radius:5px;
+    border: 1px solid lightgray;
+ 
+ }
+
+ .checkout-wrapper > .checkout-product > .checkout-modified{
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+ 
+ }
+
+ .checkout-wrapper > .checkout-product > .checkout-modified > a button{
+    cursor: pointer;
+    padding: 10px 15px;
+    background-color: tomato;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    color: whitesmoke;
+ 
+ }
+
+
+ .checkout-wrapper > .checkout-product > .total-checkout-item{
+    padding: 10px;
+ 
+ }
+
+ .checkout-wrapper > .form-or-address > .address-holder {
+   border: 1px solid lightgray;
+   border-radius: 5px;
+   padding: 10px;
+ }
+
+ .checkout-wrapper > .form-or-address > .address-holder > .address-holder-title {
+   border-bottom: 1px solid lightgray;
+   padding: 3px;
+   height: 40px;
+ }
+
+ .checkout-wrapper > .form-or-address > .address-holder > .address-holder-title a > .fa-solid {
+    float: right;
+    padding: 3px 10px;
+  }
+
+  .checkout-wrapper > .form-or-address > .address-holder >  a > button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: tomato;
+    border: none;
+    outline: none;
+    margin: 10px;
+  }
+
+  .checkout-wrapper > .form-or-address  a > button {
+    width:100%;
+    height:40px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: tomato;
+    border: none;
+    outline: none;
+    color: aliceblue;
+    margin-top: 10px;
+    color: aliceblue;
+  }
+
+
+  .checkout-wrapper > .form-or-address > .product-amount > form > input[type=email]{
+    width:80%;
+    height:40px;
+    border-radius: 5px;
    
   }
 
+  .checkout-wrapper > .form-or-address >.product-amount > form > button{
+    width:80%;
+    height:40px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: tomato;
+    border: none;
+    outline: none;
+    margin: 10px;
+    color: aliceblue;
+    color: aliceblue;
+  }
   
+  .checkout-wrapper > .pay-form{
+    width:80%;
 
+    text-align: center;
+    height: 200px;
+    border: none;
+    outline: none;
+    color: aliceblue;
+    color: aliceblue;
+   
+  }
+  .four_wrapper{
+    padding: 10px ;
+    width:80%;
+    margin:auto;
+    text-align: center;
+   
+
+}
+.four_wrapper img{
+    height: 400px;
+    width:50%;
+
+
+}
 
 
 

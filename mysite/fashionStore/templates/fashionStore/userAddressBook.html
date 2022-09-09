@@ -1,0 +1,63 @@
+{% extends 'fashionStore/index.html' %}
+{% load static %}
+{% block shopcart %}
+<a href="{% url 'fashionStore:Shoping-cart' %}" style="text-decoration:none;"><i class="fa-solid fa-cart-shopping"></i> <span>{{orders.cart_item}}</span><a/>
+    {% endblock shopcart %}
+{% block contentWrapper %}{% endblock contentWrapper %}
+{% block sortMenu %}{% endblock sortMenu %}
+
+{% block ProductContainer %}
+
+<div class="profile-menu">
+    {% block profile-menu %}
+    <a href="{% url 'fashionStore:Profile'%}"><i class="fa-solid fa-user"></i> &nbsp; My Fashion Account</a>
+    <div class="userItem">
+    <a href="{% url 'fashionStore:order'%}"> orders</a>
+    <a href="{% url 'fashionStore:Wishlist' %}">Saved items</a>
+    <a href="#">Pending Reviewed</a>
+</div>
+  <div class="userdetails">
+    <a href="{% url 'fashionStore:customer-details' %}">Details</a>
+    <a href="{% url 'fashionStore:user-Address-Book' %}">Address Book</a>
+    <a href="{% url 'fashionStore:changePassword' %}">Change Password</a>
+    <a href="{% url 'fashionStore:new-seletter' %}">Newseletter Preference</a>
+    <a href="{% url 'fashionStore:close-account' %}">Close Account</a>
+
+  </div>
+  <a href="{% url 'fashionStore:Login' %}">Logout</a>
+  {% endblock profile-menu %}
+</div>
+
+
+<div class="profile-content">
+    {% block profile-content %}
+    <div class="profile-content-title">{% block profile-content-title %}My Address{% endblock profile-content-title %}</div>
+    {% if  address %}
+    {% for address in address %}
+    <div class="profile-content-details">
+        {% block profile-content-details %}
+    
+        
+        
+        <div class="profile-details-holder" >
+        
+            <div class="profile-details-header"><a href="{% url 'fashionStore:Edit-address-book' address.id %}"><i class="fa-solid fa-pen"></i></a><p>Address Book</p></div>
+           <p style="padding-left:10px;">Region: &nbsp;&nbsp;&nbsp;&nbsp;{{address.Region}}</p>
+           <p style="padding-left:10px;">City:&nbsp;&nbsp;&nbsp;&nbsp;{{address.City}}</p>
+           <p style="padding-left:10px;">Delivery address: &nbsp;&nbsp;&nbsp;&nbsp;{{address.Delivery_address}}</p>
+           <p style="padding-left:10px;">Zip code: &nbsp;&nbsp;&nbsp;&nbsp;{{address.zip_code}}</p>
+           <p style="padding-left:10px;">Additional information: &nbsp;&nbsp;&nbsp;&nbsp;{{address.Additional_information}}</p>
+           
+         </div>
+        {% endblock profile-content-details %}
+    </div>
+    {% endfor %}
+    {% else %}
+  
+           <p>no address</p>
+           {% endif %}
+    {% endblock profile-content %}
+</div>
+{% endblock ProductContainer %}
+
+{% block paginationholder %}{% endblock paginationholder %}

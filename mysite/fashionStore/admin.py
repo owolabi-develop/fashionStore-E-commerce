@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Customer, User,Product,order,OrderItem,Category,WhishList,ProductBrand,ProductSize
+from .models import User,Product,order,OrderItem,Category,WhishList,ProductBrand,ProductSize
 from .forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import Group
@@ -57,7 +57,7 @@ admin.site.register(Category)
 
 admin.site.register(OrderItem)
 admin.site.register(order)
-admin.site.register(Customer)
+
 
 admin.site.register(ProductBrand)
 admin.site.register(ProductSize)

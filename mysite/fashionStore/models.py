@@ -1,3 +1,4 @@
+from ast import Return
 import secrets
 import string
 from django.db import models
@@ -9,6 +10,7 @@ from django.utils import timezone
 from datetime import date
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+
 class FashionManager(BaseUserManager):
     def create_user(self, email,phoneNumber, password=None):
         """
@@ -50,7 +52,6 @@ class User(AbstractUser):
     phoneNumberRegex = RegexValidator(regex = r"^\d{8,11}$")
     Gender = models.CharField(max_length=7,choices=sex,blank=True,null=True)
     phoneNumber = models.CharField(validators = [phoneNumberRegex], max_length = 11, unique = True,blank=True,null=True)
-    subscribe = models.BooleanField(verbose_name='i want to recieve fashionStore Newsletter',default=False,blank=True,null=True)
     objects = FashionManager()
     USERNAME_FIELD ='email'
     REQUIRED_FIELDS = ['phoneNumber']
@@ -81,11 +82,7 @@ class Profile(models.Model):
     def __str__(self) -> str:
         return self.User.email
 
-class Customer(models.Model):
-   User = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
-   def __str__(self) -> str:
-        return self.User.first_name
 
 
 
@@ -110,7 +107,7 @@ class ProductBrand(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10,decimal_places=2)
+    price = models.IntegerField()
     image = models.FileField(upload_to='product/')
     desc = models.TextField(max_length=255)
     category = models.ManyToManyField(Category)
@@ -123,18 +120,17 @@ class Product(models.Model):
     
 class WhishList(models.Model):
      product = models.ForeignKey(Product,on_delete=models.SET_NULL, null=True,blank=True)
-     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL, null=True,blank=True)
+     profile= models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True,blank=True)
+
+     def __str__(self) -> str:
+         return self.product.name
+
 
 class order(models.Model):
-    del_method = (("standard door delivery","standard door delivery"),("Pickup Station","Pickup Station"))
-    pay_method = (("Pay on delivery","on delivery"),("with Card","with Card"))
-    tra_id =''.join(secrets.choice(string.digits) for i in range(10))
-    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True)
+    owner_user= models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True,blank=True)
     order_date = models.DateField(auto_now_add=True)
-    placed = models.BooleanField(default=False,null=True,blank=True)
-    transction_id = models.CharField(max_length=20,unique=True,null=True,blank=True)
-    delivery_method = models.BooleanField(max_length=255,choices=del_method,null=True,blank=True)
-    payment_method = models.BooleanField(max_length=255,choices=pay_method,null=True,blank=True)
+    is_ordered = models.BooleanField(default=False,null=True,blank=True)
+    order_id = models.CharField(max_length=20,unique=True,null=True,blank=True)
    
     @property
     def cart_total(self):
@@ -147,7 +143,22 @@ class order(models.Model):
         orderitem = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitem])
         return total
-        
+
+    def __str__(self) -> str:
+        return "%s " % self.order_id
+
+class UsersOrderItem(models.Model):
+    user_orders = models.ForeignKey(order,on_delete=models.SET_NULL,blank=True,null=True)
+    image = models.FileField(upload_to='UserOrder_product/')
+    name = models.CharField(max_length=255)
+    price = models.IntegerField()
+    desc = models.TextField(max_length=255)
+    user = models.ForeignKey(Profile,on_delete=models.SET_NULL,blank=True,null=True)
+
+    def __str__(self) -> str:
+        return self.name
+ 
+
 class OrderItem(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,blank=True)
     order = models.ForeignKey(order,on_delete=models.SET_NULL,null=True,blank=True)
@@ -157,10 +168,13 @@ class OrderItem(models.Model):
     def total_price(self):
         total = self.product.price * self.quantity
         return total
+    def __str__(self):
+        return self.product.name
+    
 
 class AddressBook(models.Model):
     address_state = (
-        (None,"Please Select"),
+        (None,"Please Select State"),
         ("Delta","Delta"),
         ("Lagos","Lagos"),
         ("Abuja","Abuja"),
@@ -169,17 +183,17 @@ class AddressBook(models.Model):
         ("Jos","Jos"),
         ("Sokoto","Sokoto"),
     )
-    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
+    owner_user = models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True,blank=True)
     order = models.ForeignKey(order,on_delete=models.SET_NULL,blank=True,null=True)
-    first_name = models.CharField(max_length=255,blank=True,null=True)
-    last_name = models.CharField(max_length=255,blank=True,null=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     phoneNumberRegex = RegexValidator(regex = r"^\d{8,11}$")
-    phoneNumber = models.CharField(validators = [phoneNumberRegex], max_length = 11, unique = True,blank=True,null=True)
+    phoneNumber = models.CharField(validators = [phoneNumberRegex], max_length =11, unique=True,blank=True,null=True)
     Region = models.CharField(max_length=255,blank=True,null=True,choices=address_state)
-    City= models.CharField(max_length=255,blank=True,null=True)
-    Delivery_address = models.CharField(max_length=255,blank=True,null=True)
-    Additional_information = models.CharField(max_length=255,blank=True,null=True)
-    zip_code = models.CharField(max_length=17,blank=True,null=True)
+    City= models.CharField(max_length=255)
+    Delivery_address = models.CharField(max_length=255)
+    Additional_information = models.CharField(max_length=255)
+    zip_code = models.CharField(max_length=17)
     default_address = models.BooleanField(default=True,null=True,blank=True)
 
     def __str__(self):

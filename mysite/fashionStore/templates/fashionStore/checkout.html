@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionStoreCheckout</title>
+    <link rel="stylesheet" href="{% static 'fashionStore/main.css' %}">
+    <script src="{% static 'fashionStore/main.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/18de66c05e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="checkout-wrapper">
+    <div class="form-or-address">
+        <div class="address-form-container">
+       
+            <form action="{% url 'fashionStore:Checkout-page' %}" method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                 <!--fieldWrapper-container-->
+               <div class="fieldWrapper-container">
+                <div class="fieldWrapper">
+                    {{ form.first_name }}
+                     {{ form.first_name.errors }}
+                </div>
+    
+                <div class="fieldWrapper">
+                    {{ form.last_name }}
+                    {{ form.lastname.errors }}
+                     
+                </div>
+    
+                <div class="fieldWrapper">
+                    {{ form.phoneNumber }}
+                    {{ form.phoneNumber.errors }}
+                     
+                </div>
+    
+                <div class="fieldWrapper">
+                    {{ form.Delivery_address }}
+                    {{ form.Delivery_address.errors }} 
+                </div>
+    
+                <div class="fieldWrapper">
+                    {{ form.Region }}
+                    {{ form.Region.errors }} 
+                </div>
+    
+                <div class="fieldWrapper">
+                    {{ form.City }}
+                    {{ form.City.errors }} 
+                </div>
+    
+                <div class="fieldWrapper">
+                    {{ form.Additional_information }}
+                    {{ form.Additional_information.errors }} 
+                </div>
+    
+                <div class="fieldWrapper">
+                    {{ form.zip_code }}
+                    {{ form.zip_code.errors }} 
+                </div>
+            </div>
+            <!--fieldWrapper-container-->
+            <div class="fieldWrapper">
+                {{ form.default_address.label|title }}
+                <br/>
+                {{ form.default_address }}
+                {{ form.default_address.errors }} 
+            </div>
+                <input type="submit" value="Continue">
+            </form>
+         </div>
+    </div>
+    <div class="checkout-product">
+        <div class="checkout-title"><p>Order Summary</p></div>
+        <div class="checkout-product-holder">
+            <table>
+                {% if item %}
+                {% for products in item %}
+                <tr>
+                    <td><img src="{{products.product.image.url}}" alt="{{products.product.name}}"></td>
+                    <td>{{products.product.name}}</td>
+                    <td>&#8358;{{products.product.price}}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p>No Product </p>
+                {% endif %}
+            </table>
+        </div>
+    <div class="checkout-modified"><a href="{% url 'fashionStore:Shoping-cart' %}"><button>Modified Cart</button></a></div>
+    <div class="total-checkout-item">
+        <p>Items:{{orders.cart_item}}</p>
+        <p>Total:&#8358;{{orders.cart_total}}</p>
+    </div>
+    </div>
+
+
+
+</div>
+</body>
+</html>
